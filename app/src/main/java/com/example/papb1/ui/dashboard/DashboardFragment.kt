@@ -9,18 +9,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.papb1.R
 import com.example.papb1.databinding.FragmentDashboardBinding
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.text.Editable
 import java.text.SimpleDateFormat
 import java.util.Date
+import androidx.fragment.app.FragmentActivity
+import com.example.papb1.ui.dashboard.DashboardViewModel
 
-class DashboardFragment : AppCompatActivity() {
+
+class DashboardFragment : Fragment() {
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var locationEditText: EditText
+    private lateinit var facultyEditText: EditText
+    private lateinit var dateEditText: EditText
+    private lateinit var wasteTypeEditText: EditText
+    private lateinit var textDashboard: TextView
+    private lateinit var photoPreview: ImageView
+    private lateinit var btnAddPhoto: Button
+    private lateinit var submitButton: Button
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -28,46 +43,52 @@ class DashboardFragment : AppCompatActivity() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var locationEditText: EditText
-    private lateinit var facultyEditText: EditText
-    private lateinit var dateEditText: EditText
-    private lateinit var photoImageView: ImageView
-    private lateinit var wasteTypeEditText: EditText
-
-    // SharedPreferences for storing form data
-    private lateinit var sharedPreferences: SharedPreferences
-
     // Dummy data (replace with your actual data source)
     private var formData: FormData = FormData("", "", "", null, "")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_dashboard)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+//        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val dashboardViewModel =
+            ViewModelProvider(this).get(DashboardViewModel::class.java)
 
-        // Initialize UI components
-        locationEditText = findViewById(R.id.etLocation)
-        facultyEditText = findViewById(R.id.etFaculty)
-        dateEditText = findViewById(R.id.etDate)
-        photoImageView = findViewById(R.id.ivPhotoPreview)
-        wasteTypeEditText = findViewById(R.id.etWasteType)
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
-        // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("FormData", Context.MODE_PRIVATE)
+        sharedPreferences = requireContext().getSharedPreferences("FormData", Context.MODE_PRIVATE)
 
-        // Handle photo capture (you need to implement this)
-        val capturePhotoButton: Button = findViewById(R.id.btnAddPhoto)
-        capturePhotoButton.setOnClickListener {
+        textDashboard = binding.textDashboard
+        dateEditText = binding.etDate
+        facultyEditText = binding.etFaculty
+        locationEditText = binding.etLocation
+        wasteTypeEditText = binding.etWasteType
+        photoPreview = binding.ivPhotoPreview
+        btnAddPhoto = binding.btnAddPhoto
+        submitButton = binding.btnSubmit
+
+        dashboardViewModel.text.observe(viewLifecycleOwner) {
+            facultyEditText.setText("Teknik")
+            dateEditText.setText("2023-09-27")
+            locationEditText.setText("Jalan Grafika")
+            wasteTypeEditText.setText("Anorganik")
+            photoPreview.setBackgroundColor(Color.BLUE)
+
+        }
+
+        btnAddPhoto.setOnClickListener {
             // Implement photo capture logic here
         }
 
         // Implement submission logic (e.g., save report data to a database)
-        val submitButton: Button = findViewById(R.id.btnSubmit)
         submitButton.setOnClickListener {
             // Implement report submission logic here
 
             // Save form data to SharedPreferences
             saveFormDataToSharedPreferences()
         }
+        return root
     }
 
     override fun onResume() {
@@ -76,9 +97,10 @@ class DashboardFragment : AppCompatActivity() {
         loadFormDataFromSharedPreferences()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Save form data to SharedPreferences when the activity is destroyed
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        // Save form data to SharedPreferences when the fragment is destroyed
         saveFormDataToSharedPreferences()
     }
 
