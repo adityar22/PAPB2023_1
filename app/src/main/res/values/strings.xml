@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">PAPB1</string>
-<!--    string parent menu-->
+    <!--    string parent menu-->
     <string name="parent_pelaporan">Pelaporan</string>
     <string name="parent_news">Pemberitahuan</string>
     <string name="parent_signin">Sign In</string>
     <string name="parent_signup">Sign Up</string>
-<!--    string menu pelaporan-->
+    <!--    string menu pelaporan-->
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

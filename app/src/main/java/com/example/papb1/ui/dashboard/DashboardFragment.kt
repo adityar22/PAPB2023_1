@@ -22,20 +22,9 @@ import android.text.Editable
 import java.text.SimpleDateFormat
 import java.util.Date
 import androidx.fragment.app.FragmentActivity
-import com.example.papb1.ui.dashboard.DashboardViewModel
-
 
 class DashboardFragment : Fragment() {
 
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var locationEditText: EditText
-    private lateinit var facultyEditText: EditText
-    private lateinit var dateEditText: EditText
-    private lateinit var wasteTypeEditText: EditText
-    private lateinit var textDashboard: TextView
-    private lateinit var photoPreview: ImageView
-    private lateinit var btnAddPhoto: Button
-    private lateinit var submitButton: Button
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -50,43 +39,39 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        return inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Initialize SharedPreferences
         sharedPreferences = requireContext().getSharedPreferences("FormData", Context.MODE_PRIVATE)
 
-        textDashboard = binding.textDashboard
-        dateEditText = binding.etDate
-        facultyEditText = binding.etFaculty
-        locationEditText = binding.etLocation
-        wasteTypeEditText = binding.etWasteType
-        photoPreview = binding.ivPhotoPreview
-        btnAddPhoto = binding.btnAddPhoto
-        submitButton = binding.btnSubmit
-
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            facultyEditText.setText("Teknik")
-            dateEditText.setText("2023-09-27")
-            locationEditText.setText("Jalan Grafika")
-            wasteTypeEditText.setText("Anorganik")
-            photoPreview.setBackgroundColor(Color.BLUE)
-
-        }
-
+        // Handle photo capture (you need to implement this)
+        val btnAddPhoto: Button = view.findViewById(R.id.btnAddPhoto)
         btnAddPhoto.setOnClickListener {
             // Implement photo capture logic here
         }
 
         // Implement submission logic (e.g., save report data to a database)
-        submitButton.setOnClickListener {
+        val locationEditText: EditText = view.findViewById(R.id.etLocation)
+        val facultyEditText: EditText = view.findViewById(R.id.etFaculty)
+        val dateEditText: EditText = view.findViewById(R.id.etDate)
+        val photoImageView: ImageView = view.findViewById(R.id.ivPhotoPreview)
+        val wasteTypeEditText: EditText = view.findViewById(R.id.etWasteType)
+        val btnSubmit: Button = view.findViewById(R.id.btnSubmit)
+        btnSubmit.setOnClickListener {
             // Implement report submission logic here
 
             // Save form data to SharedPreferences
-            saveFormDataToSharedPreferences()
+            saveFormDataToSharedPreferences(
+                locationEditText.text.toString(),
+                facultyEditText.text.toString(),
+                dateEditText.text.toString(),
+                // Save the photo path if available, you need to implement this logic
+                wasteTypeEditText.text.toString()
+            )
         }
         return root
     }
@@ -97,20 +82,30 @@ class DashboardFragment : Fragment() {
         loadFormDataFromSharedPreferences()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onDestroy() {
+        super.onDestroy()
         // Save form data to SharedPreferences when the fragment is destroyed
-        saveFormDataToSharedPreferences()
+
+        saveFormDataToSharedPreferences(
+            location = view?.findViewById<EditText>(R.id.etLocation)?.text.toString(),
+            faculty = view?.findViewById<EditText>(R.id.etFaculty)?.text.toString(),
+            date = view?.findViewById<EditText>(R.id.etDate)?.text.toString(),
+            wasteType = view?.findViewById<EditText>(R.id.etWasteType)?.text.toString()
+        )
     }
 
-    private fun saveFormDataToSharedPreferences() {
+    private fun saveFormDataToSharedPreferences(
+        location: String,
+        faculty: String,
+        date: String,
+        wasteType: String
+    ) {
         val editor = sharedPreferences.edit()
-        editor.putString("location", locationEditText.text.toString())
-        editor.putString("faculty", facultyEditText.text.toString())
-        editor.putString("date", dateEditText.text.toString())
+        editor.putString("location", location)
+        editor.putString("faculty", faculty)
+        editor.putString("date", date)
         // Save the photo path if available, you need to implement this logic
-        editor.putString("wasteType", wasteTypeEditText.text.toString())
+        editor.putString("wasteType", wasteType)
         editor.apply()
     }
 
@@ -121,12 +116,11 @@ class DashboardFragment : Fragment() {
         // Load the photo if available, you need to implement this logic
         formData.wasteType = sharedPreferences.getString("wasteType", "") ?: ""
 
-        // Update the form fields
-        locationEditText.setText(formData.location)
-        facultyEditText.setText(formData.faculty)
-        dateEditText.setText(formData.date)
+        view?.findViewById<EditText>(R.id.etLocation)?.setText(formData.location)
+        view?.findViewById<EditText>(R.id.etFaculty)?.setText(formData.faculty)
+        view?.findViewById<EditText>(R.id.etDate)?.setText(formData.date)
         // Load the photo into the photoImageView if available
-        wasteTypeEditText.setText(formData.wasteType)
+        view?.findViewById<EditText>(R.id.etWasteType)?.setText(formData.wasteType)
     }
 
     data class FormData(
