@@ -19,20 +19,10 @@ import android.app.Activity
 import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.Date
+import androidx.fragment.app.FragmentActivity
 
-class DashboardFragment : AppCompatActivity() {
 
-    private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    private lateinit var locationEditText: EditText
-    private lateinit var facultyEditText: EditText
-    private lateinit var dateEditText: EditText
-    private lateinit var photoImageView: ImageView
-    private lateinit var wasteTypeEditText: EditText
+class DashboardFragment : Fragment() {
 
     // SharedPreferences for storing form data
     private lateinit var sharedPreferences: SharedPreferences
@@ -40,33 +30,43 @@ class DashboardFragment : AppCompatActivity() {
     // Dummy data (replace with your actual data source)
     private var formData: FormData = FormData("", "", "", null, "")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_dashboard)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
 
-        // Initialize UI components
-        locationEditText = findViewById(R.id.etLocation)
-        facultyEditText = findViewById(R.id.etFaculty)
-        dateEditText = findViewById(R.id.etDate)
-        photoImageView = findViewById(R.id.ivPhotoPreview)
-        wasteTypeEditText = findViewById(R.id.etWasteType)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("FormData", Context.MODE_PRIVATE)
+        sharedPreferences = requireContext().getSharedPreferences("FormData", Context.MODE_PRIVATE)
 
         // Handle photo capture (you need to implement this)
-        val capturePhotoButton: Button = findViewById(R.id.btnAddPhoto)
-        capturePhotoButton.setOnClickListener {
+        val btnAddPhoto: Button = view.findViewById(R.id.btnAddPhoto)
+        btnAddPhoto.setOnClickListener {
             // Implement photo capture logic here
         }
 
         // Implement submission logic (e.g., save report data to a database)
-        val submitButton: Button = findViewById(R.id.btnSubmit)
-        submitButton.setOnClickListener {
+        val locationEditText: EditText = view.findViewById(R.id.etLocation)
+        val facultyEditText: EditText = view.findViewById(R.id.etFaculty)
+        val dateEditText: EditText = view.findViewById(R.id.etDate)
+        val photoImageView: ImageView = view.findViewById(R.id.ivPhotoPreview)
+        val wasteTypeEditText: EditText = view.findViewById(R.id.etWasteType)
+        val btnSubmit: Button = view.findViewById(R.id.btnSubmit)
+        btnSubmit.setOnClickListener {
             // Implement report submission logic here
 
             // Save form data to SharedPreferences
-            saveFormDataToSharedPreferences()
+            saveFormDataToSharedPreferences(
+                locationEditText.text.toString(),
+                facultyEditText.text.toString(),
+                dateEditText.text.toString(),
+                // Save the photo path if available, you need to implement this logic
+                wasteTypeEditText.text.toString()
+            )
         }
     }
 
@@ -78,17 +78,28 @@ class DashboardFragment : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Save form data to SharedPreferences when the activity is destroyed
-        saveFormDataToSharedPreferences()
+        // Save form data to SharedPreferences when the fragment is destroyed
+
+        saveFormDataToSharedPreferences(
+            location = view?.findViewById<EditText>(R.id.etLocation)?.text.toString(),
+            faculty = view?.findViewById<EditText>(R.id.etFaculty)?.text.toString(),
+            date = view?.findViewById<EditText>(R.id.etDate)?.text.toString(),
+            wasteType = view?.findViewById<EditText>(R.id.etWasteType)?.text.toString()
+        )
     }
 
-    private fun saveFormDataToSharedPreferences() {
+    private fun saveFormDataToSharedPreferences(
+        location: String,
+        faculty: String,
+        date: String,
+        wasteType: String
+    ) {
         val editor = sharedPreferences.edit()
-        editor.putString("location", locationEditText.text.toString())
-        editor.putString("faculty", facultyEditText.text.toString())
-        editor.putString("date", dateEditText.text.toString())
+        editor.putString("location", location)
+        editor.putString("faculty", faculty)
+        editor.putString("date", date)
         // Save the photo path if available, you need to implement this logic
-        editor.putString("wasteType", wasteTypeEditText.text.toString())
+        editor.putString("wasteType", wasteType)
         editor.apply()
     }
 
@@ -99,12 +110,11 @@ class DashboardFragment : AppCompatActivity() {
         // Load the photo if available, you need to implement this logic
         formData.wasteType = sharedPreferences.getString("wasteType", "") ?: ""
 
-        // Update the form fields
-        locationEditText.setText(formData.location)
-        facultyEditText.setText(formData.faculty)
-        dateEditText.setText(formData.date)
+        view?.findViewById<EditText>(R.id.etLocation)?.setText(formData.location)
+        view?.findViewById<EditText>(R.id.etFaculty)?.setText(formData.faculty)
+        view?.findViewById<EditText>(R.id.etDate)?.setText(formData.date)
         // Load the photo into the photoImageView if available
-        wasteTypeEditText.setText(formData.wasteType)
+        view?.findViewById<EditText>(R.id.etWasteType)?.setText(formData.wasteType)
     }
 
     data class FormData(
