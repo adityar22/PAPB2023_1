@@ -1,6 +1,5 @@
 package com.example.papb1.ui.dashboard
 
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -20,7 +19,6 @@ import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.Date
 import androidx.fragment.app.FragmentActivity
-
 
 class DashboardFragment : Fragment() {
 
@@ -53,7 +51,7 @@ class DashboardFragment : Fragment() {
         val locationEditText: EditText = view.findViewById(R.id.etLocation)
         val facultyEditText: EditText = view.findViewById(R.id.etFaculty)
         val dateEditText: EditText = view.findViewById(R.id.etDate)
-        val photoImageView: ImageView = view.findViewById(R.id.ivPhotoPreview)
+//        val photoImageView: ImageView = view.findViewById(R.id.ivPhotoPreview)
         val wasteTypeEditText: EditText = view.findViewById(R.id.etWasteType)
         val btnSubmit: Button = view.findViewById(R.id.btnSubmit)
         btnSubmit.setOnClickListener {

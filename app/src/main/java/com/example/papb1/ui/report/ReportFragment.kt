@@ -1,23 +1,28 @@
-package com.example.papb1
-
-import android.app.Activity
+package com.example.papb1.ui.report
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.papb1.R
+import com.example.papb1.ReportView
 import com.example.papb1.model.ReportModel
 import com.example.papb1.presenter.ReportPresenter
 
-interface ReportView {
-    // Metode yang akan dipanggil oleh Presenter untuk mengupdate tampilan
-    fun showReport(report: List<ReportModel>)
-}
-class ReportActivity : Activity(), ReportView {
+class ReportFragment : Fragment(), ReportView {
     private val presenter = ReportPresenter(this)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_report, container, false)
 
         // Memanggil metode presenter untuk mendapatkan dan menampilkan data
         presenter.getPeople()
+
+        return view
     }
 
     override fun showReport(report: List<ReportModel>) {
