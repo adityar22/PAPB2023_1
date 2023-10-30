@@ -4,13 +4,15 @@ import android.app.Activity
 import android.os.Bundle
 import com.example.papb1.model.ReportModel
 import com.example.papb1.presenter.ReportPresenter
+import com.example.papb1.ui.report.ReportFragment
 
 interface ReportView {
     // Metode yang akan dipanggil oleh Presenter untuk mengupdate tampilan
     fun showReport(report: List<ReportModel>)
 }
 class ReportActivity : Activity(), ReportView {
-    private val presenter = ReportPresenter(this)
+    private val fragment = ReportFragment()
+    private val presenter = ReportPresenter(fragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
