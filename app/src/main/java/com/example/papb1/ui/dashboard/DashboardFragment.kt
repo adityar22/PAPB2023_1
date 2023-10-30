@@ -8,22 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.papb1.R
 import com.example.papb1.databinding.FragmentDashboardBinding
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.text.Editable
 import java.text.SimpleDateFormat
 import java.util.Date
 import androidx.fragment.app.FragmentActivity
 
 class DashboardFragment : Fragment() {
 
-    // SharedPreferences for storing form data
-    private lateinit var sharedPreferences: SharedPreferences
+
+    private var _binding: FragmentDashboardBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     // Dummy data (replace with your actual data source)
     private var formData: FormData = FormData("", "", "", null, "")
@@ -66,6 +72,7 @@ class DashboardFragment : Fragment() {
                 wasteTypeEditText.text.toString()
             )
         }
+        return root
     }
 
     override fun onResume() {
