@@ -1,6 +1,5 @@
 package com.example.papb1.ui.dashboard
 
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -45,35 +44,24 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize SharedPreferences
-        sharedPreferences = requireContext().getSharedPreferences("FormData", Context.MODE_PRIVATE)
+        // Bind data to views
+        view.findViewById<TextView>(R.id.tvReportType).text = report.reportType
+        view.findViewById<TextView>(R.id.tvReporterName).text = report.reporterName
+        // ... bind other views
 
-        // Handle photo capture (you need to implement this)
-        val btnAddPhoto: Button = view.findViewById(R.id.btnAddPhoto)
-        btnAddPhoto.setOnClickListener {
-            // Implement photo capture logic here
-        }
+        // Example of displaying location
+        val locationTextView: TextView = view.findViewById(R.id.tvLocation)
+        locationTextView.text = "Location: ${report.location.latitude}, ${report.location.longitude}"
 
-        // Implement submission logic (e.g., save report data to a database)
-        val locationEditText: EditText = view.findViewById(R.id.etLocation)
-        val facultyEditText: EditText = view.findViewById(R.id.etFaculty)
-        val dateEditText: EditText = view.findViewById(R.id.etDate)
-        val photoImageView: ImageView = view.findViewById(R.id.ivPhotoPreview)
-        val wasteTypeEditText: EditText = view.findViewById(R.id.etWasteType)
-        val btnSubmit: Button = view.findViewById(R.id.btnSubmit)
-        btnSubmit.setOnClickListener {
-            // Implement report submission logic here
+        // Example of displaying date
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateTextView: TextView = view.findViewById(R.id.tvReportingDate)
+        dateTextView.text = "Date: ${dateFormat.format(report.reportingDate)}"
 
-            // Save form data to SharedPreferences
-            saveFormDataToSharedPreferences(
-                locationEditText.text.toString(),
-                facultyEditText.text.toString(),
-                dateEditText.text.toString(),
-                // Save the photo path if available, you need to implement this logic
-                wasteTypeEditText.text.toString()
-            )
-        }
-        return root
+        // Load photo using a library like Picasso or Glide
+        val photoImageView: ImageView = view.findViewById(R.id.ivPhoto)
+        // Use a library like Picasso or Glide to load the image from the URL or file path
+        // Picasso.get().load(report.photo).into(photoImageView)
     }
 
     override fun onResume() {
@@ -94,34 +82,6 @@ class DashboardFragment : Fragment() {
         )
     }
 
-    private fun saveFormDataToSharedPreferences(
-        location: String,
-        faculty: String,
-        date: String,
-        wasteType: String
-    ) {
-        val editor = sharedPreferences.edit()
-        editor.putString("location", location)
-        editor.putString("faculty", faculty)
-        editor.putString("date", date)
-        // Save the photo path if available, you need to implement this logic
-        editor.putString("wasteType", wasteType)
-        editor.apply()
-    }
-
-    private fun loadFormDataFromSharedPreferences() {
-        formData.location = sharedPreferences.getString("location", "") ?: ""
-        formData.faculty = sharedPreferences.getString("faculty", "") ?: ""
-        formData.date = sharedPreferences.getString("date", "") ?: ""
-        // Load the photo if available, you need to implement this logic
-        formData.wasteType = sharedPreferences.getString("wasteType", "") ?: ""
-
-        view?.findViewById<EditText>(R.id.etLocation)?.setText(formData.location)
-        view?.findViewById<EditText>(R.id.etFaculty)?.setText(formData.faculty)
-        view?.findViewById<EditText>(R.id.etDate)?.setText(formData.date)
-        // Load the photo into the photoImageView if available
-        view?.findViewById<EditText>(R.id.etWasteType)?.setText(formData.wasteType)
-    }
 
     data class FormData(
         var location: String,
