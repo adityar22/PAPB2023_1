@@ -1,13 +1,41 @@
-<!-- res/layout/fragment_main.xml -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- fragment_report.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvReportType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fragment Content" />
+        android:text="Report Type"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvReporterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reporter Name"/>
+
+    <!-- Add other TextViews for other properties -->
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"/>
+
+    <TextView
+        android:id="@+id/tvReportingDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reporting Date"/>
+
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_foreground"
+    android:layout_marginTop="16dp"/>
+</LinearLayout>
