@@ -13,7 +13,8 @@ import java.util.Date
 
 class ReportActivity : AppCompatActivity(), ReportModelContract.View {
 
-    private val presenter: ReportModelContract.Presenter = ReportPresenter(this, FirebaseReportModel())
+    private val reportDao by lazy { (application as SimpalaRoom).reportDatabase.reportDao() }
+    private val presenter: ReportModelContract.Presenter = ReportPresenter(this, FirebaseReportModel(reportDao))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,8 @@ class ReportActivity : AppCompatActivity(), ReportModelContract.View {
 
         // Example: Trigger fetching reports
         presenter.getReports()
+
+        val reportDatabase = (application as SimpalaRoom).reportDatabase
 
         // Example: Trigger saving a report
         val report = Report(
