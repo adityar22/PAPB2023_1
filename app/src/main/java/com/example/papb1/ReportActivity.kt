@@ -10,15 +10,24 @@ import com.example.papb1.model.ReportModelContract
 import com.example.papb1.presenter.ReportPresenter
 import com.example.papb1.ui.report.ReportFragment
 import java.util.Date
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.papb1.adapter.ReportAdapter
 
 class ReportActivity : AppCompatActivity(), ReportModelContract.View {
 
     private val reportDao by lazy { (application as SimpalaRoom).reportDatabase.reportDao() }
     private val presenter: ReportModelContract.Presenter = ReportPresenter(this, FirebaseReportModel(reportDao))
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var reportAdapter: ReportAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
+
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Example: Trigger fetching reports
         presenter.getReports()
@@ -41,7 +50,7 @@ class ReportActivity : AppCompatActivity(), ReportModelContract.View {
         // Display the ReportFragment
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(
-            R.id.fragmentContainer,
+            R.id.recyclerView,
             ReportFragment.newInstance(report)
         )
         fragmentTransaction.commit()
@@ -49,6 +58,8 @@ class ReportActivity : AppCompatActivity(), ReportModelContract.View {
 
     override fun showReports(reports: List<Report>) {
         // Update UI with the list of reports
+        reportAdapter = ReportAdapter(reports)
+        recyclerView.adapter = reportAdapter
     }
 
     override fun showError(message: String) {
