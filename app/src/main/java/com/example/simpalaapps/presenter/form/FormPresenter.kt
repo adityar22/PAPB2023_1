@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 class FormReportPresenter(private val view: FormReportContract.View, private val reportDao: ReportDao) :
     FormReportContract.Presenter {
 
-    override suspend  fun submitReport(report: ReportEntity) {
+    override suspend fun submitReport(report: ReportEntity) {
         // Lakukan validasi atau operasi lain yang diperlukan sebelum menyimpan laporan
         Log.i(report.reportType, report.reportType)
         withContext(Dispatchers.IO) {

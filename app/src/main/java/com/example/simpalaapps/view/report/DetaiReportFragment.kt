@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,8 +131,8 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             reportingDateTextView.text = "Reporting Date: ${it.reportingDate}"
             reporterEmailTextView.text = "Reporter Email: ${it.reporterEmail}"
 
-            val bitmap: Bitmap? = it.photo.toBitmap()
-            photoImageView.setImageBitmap(bitmap)
+//            val bitmap: Bitmap = it.photo.toBitmap()
+//            photoImageView.setImageBitmap(bitmap)
         }
     }
 

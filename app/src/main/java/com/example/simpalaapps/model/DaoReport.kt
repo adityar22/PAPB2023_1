@@ -14,8 +14,8 @@ interface ReportDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertReport(report: ReportEntity): Long
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertAll(reports: List<ReportEntity>): List<Long>  // Return type is List<Long>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(reports: List<ReportEntity>): List<Long>  // Return type is List<Long>
 
     @Query("SELECT * FROM report_table WHERE id = :reportId")
     fun getReportById(reportId: Long): ReportEntity
