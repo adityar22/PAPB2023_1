@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/teal_700"
-        android:background=""
+        android:background="#FAFAFA"
         android:text="Cancel"/>
 
 </LinearLayout>
