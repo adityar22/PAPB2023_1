@@ -1,11 +1,14 @@
 package com.example.simpalaapps.view.report
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -110,8 +113,10 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         this.report = report
 
         val reportTypeTextView: TextView = requireView().findViewById(R.id.reportTypeTextView)
+        val photoImageView: ImageView = requireView().findViewById(R.id.photoImageView)
         val reporterNameTextView: TextView = requireView().findViewById(R.id.reporterNameTextView)
         val locationTextView: TextView = requireView().findViewById(R.id.locationTextView)
+        val reportDescriptionTextView: TextView = requireView().findViewById(R.id.reportDescriptionTextView)
         val reportingDateTextView: TextView = requireView().findViewById(R.id.reportingDateTextView)
         val reporterEmailTextView: TextView = requireView().findViewById(R.id.reporterEmailTextView)
 
@@ -121,9 +126,17 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             reportTypeTextView.text = "Report Type: ${it.reportType}"
             reporterNameTextView.text = "Reporter Name: ${it.reporterName}"
             locationTextView.text = "Location: ${it.latitude}, ${it.longitude}"
+            reportDescriptionTextView.text = "${it.reportDesc}"
             reportingDateTextView.text = "Reporting Date: ${it.reportingDate}"
             reporterEmailTextView.text = "Reporter Email: ${it.reporterEmail}"
+
+            val bitmap: Bitmap? = it.photo.toBitmap()
+            photoImageView.setImageBitmap(bitmap)
         }
+    }
+
+    private fun ByteArray.toBitmap(): Bitmap {
+        return BitmapFactory.decodeByteArray(this, 0, this.size)
     }
 
     override fun onDeleteClicked(reportId: Long) {

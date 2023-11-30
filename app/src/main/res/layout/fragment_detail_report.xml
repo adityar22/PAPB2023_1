@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- res/layout/fragment_detail_report.xml -->
-
-<!-- res/layout/fragment_detail_report.xml -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
 
     <TextView
         android:id="@+id/reportTypeTextView"
@@ -13,26 +11,61 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Report Type:"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/photoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reportTypeTextView"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/placeholder_image"
+        android:contentDescription="Report Photo" />
 
     <TextView
         android:id="@+id/reporterNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/reportTypeTextView"
+        android:layout_below="@id/photoImageView"
         android:layout_marginTop="8dp"
         android:text="Reporter Name:"
         android:textSize="18sp"
         android:textStyle="bold" />
-
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reporterNameTextView"
         android:layout_marginTop="8dp"
-        android:text="Location:"
+        android:text="Coordinat:"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnSeeOnMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationTextView"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@id/btnUpdate"
+        android:layout_alignParentStart="true"
+        android:text="See on Map" />
+    <TextView
+        android:id="@+id/titleDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSeeOnMap"
+        android:layout_marginTop="8dp"
+        android:text="Deskripsi:"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/reportDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleDesc"
+        android:layout_marginTop="8dp"
+        android:text=""
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -40,7 +73,7 @@
         android:id="@+id/reportingDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/locationTextView"
+        android:layout_below="@id/reportDescriptionTextView"
         android:layout_marginTop="8dp"
         android:text="Reporting Date:"
         android:textSize="18sp"
@@ -62,15 +95,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/reporterEmailTextView"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toStartOf="@id/btnDelete"
         android:text="Update" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnUpdate"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/reporterEmailTextView"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentEnd="true"
         android:text="Delete" />
 
     <!-- Anda dapat menambahkan elemen UI lainnya sesuai kebutuhan -->
 </RelativeLayout>
+

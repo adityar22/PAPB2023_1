@@ -114,7 +114,7 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         photoFile?.also {
             val photoUri: Uri = FileProvider.getUriForFile(
                 requireContext(),
-                "com.example.simpalaapps",
+                "com.example.simpalaapps.provider",
                 it
             )
             currentPhotoUri = photoUri
