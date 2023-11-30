@@ -23,6 +23,7 @@ import com.example.simpalaapps.model.AppDatabase
 import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.form.FormReportContract
 import com.example.simpalaapps.presenter.form.FormReportPresenter
+import com.example.simpalaapps.view.DashboardFragment
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
@@ -84,16 +85,15 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         }
 
         // Tambahkan logika UI dan onClickListener untuk menyimpan laporan
-        val submitButton: Button = view.findViewById(R.id.buttonSubmit)
         submitButton.setOnClickListener {
-            // Ambil data dari elemen-elemen UI (EditText, Spinner, dll.)
             val report = createReportFromInput()
             Log.i(report.reportType, report.reporterEmail)
 
-            // Panggil metode presenter untuk menyimpan laporan
             lifecycleScope.launch {
                 presenter.submitReport(report)
             }
+
+            backToMainActivity();
         }
 
         photoButton.setOnClickListener {
@@ -101,6 +101,15 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         }
 
         return view
+    }
+
+    private fun backToMainActivity () {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val destinationFragment = DashboardFragment()
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.replace(R.id.fragmentContainer, destinationFragment)
+        fragmentTransaction.commit()
     }
 
     private fun openCamera() {

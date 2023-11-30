@@ -1,5 +1,6 @@
 package com.example.simpalaapps.presenter.detail
 
+import android.util.Log
 import com.example.simpalaapps.model.ReportDao
 import com.example.simpalaapps.model.ReportEntity
 
@@ -15,9 +16,9 @@ class ReportRepository(private val reportDao: ReportDao) {
         reportDao.insertReport(report)
     }
 
-//    suspend fun insertAll(reports: List<ReportEntity>) {
-//        reportDao.insertAll(reports)
-//    }
+    fun insertAll(reports: List<ReportEntity>) {
+        reportDao.insertAll(reports)
+    }
 
     fun updateReport(report: ReportEntity) {
         reportDao.updateReport(report)

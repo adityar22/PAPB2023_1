@@ -13,6 +13,7 @@ import com.example.simpalaapps.R
 import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.update.UpdateFormContract
 import com.example.simpalaapps.presenter.update.UpdateFormPresenter
+import com.example.simpalaapps.view.DashboardFragment
 
 class UpdateFormFragment : Fragment(), UpdateFormContract.View {
 

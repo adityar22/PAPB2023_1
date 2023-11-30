@@ -18,3 +18,20 @@ data class ReportEntity(
     val reporterEmail: String
 )
 
+// For Retrofit
+data class Report(
+    val reportId: Long? = 0,
+    val reportType: String,
+    val reporterName: String,
+    val reportDesc: String,
+    val latitude: Double,
+    val longitude: Double,
+    val photo: String,
+    val reportingDate: String,
+    val reporterEmail: String
+)
+data class ReportsResponse(
+    val message: String,
+    val reports: List<Report>
+)
+

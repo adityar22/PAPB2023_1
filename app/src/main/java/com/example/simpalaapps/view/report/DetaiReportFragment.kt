@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.detail.DetailReportContract
 import com.example.simpalaapps.presenter.detail.DetailReportPresenter
 import com.example.simpalaapps.presenter.detail.ReportRepository
+import com.example.simpalaapps.view.DashboardFragment
 import kotlinx.coroutines.launch
 
 // DetailReportFragment.kt
@@ -118,6 +120,7 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         alertDialogBuilder.setMessage("Are you sure you want to delete this report?")
         alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
             onDeleteClicked(reportId)
+            backToMainActivity()
         }
         alertDialogBuilder.setNegativeButton("No") { dialog, _ ->
             dialog.dismiss()
@@ -149,8 +152,8 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             reportingDateTextView.text = "Reporting Date: ${it.reportingDate}"
             reporterEmailTextView.text = "Reporter Email: ${it.reporterEmail}"
 
-            val bitmap: Bitmap? = it.photo.toBitmap()
-            photoImageView.setImageBitmap(bitmap)
+//            val bitmap: Bitmap = it.photo.toBitmap()
+//            photoImageView.setImageBitmap(bitmap)
         }
     }
 
@@ -160,6 +163,15 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
     override fun onDeleteClicked(reportId: Long) {
         presenter.onDeleteClicked(reportId)
+    }
+
+    private fun backToMainActivity () {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val destinationFragment = DashboardFragment()
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.replace(R.id.fragmentContainer, destinationFragment)
+        fragmentTransaction.commit()
     }
 }
 
