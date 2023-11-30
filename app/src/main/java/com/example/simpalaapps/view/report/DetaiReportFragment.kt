@@ -1,8 +1,10 @@
 package com.example.simpalaapps.view.report
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
@@ -63,6 +66,7 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
         val btnUpdate: Button = view.findViewById(R.id.btnUpdate)
         val btnDelete: Button = view.findViewById(R.id.btnDelete)
+        val btnSeeOnMap: Button = view.findViewById(R.id.btnSeeOnMap)
 
         btnUpdate.setOnClickListener {
             openUpdateFormFragment()
@@ -72,7 +76,25 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             showDeleteConfirmationDialog(reportId)
         }
 
+        btnSeeOnMap.setOnClickListener{
+            showMapDirect(report.latitude, report.longitude)
+        }
+
         return view
+    }
+
+    private fun showMapDirect(latitude: Double, longitude: Double){
+        val geoUri = "geo:$latitude,$longitude?q=$latitude,$longitude"
+        val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        // Check if there's an app to handle the intent
+        if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(mapIntent)
+        } else {
+            // Handle the case where Google Maps is not installed
+            Toast.makeText(requireContext(), "Google Maps app is not installed", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun openUpdateFormFragment() {
@@ -81,10 +103,7 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
         // Create an instance of the UpdateFormFragment with the report details
         val updateFormFragment = UpdateFormFragment.newInstance(
-            report.id!!,
-            report.reportType,
-            report.reporterName
-            // Pass other fields as needed...
+            report
         )
 
         // Replace the current fragment with the UpdateFormFragment
@@ -141,8 +160,6 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
     }
 
     override fun onDeleteClicked(reportId: Long) {
-        // Implement the onDeleteClicked logic here
-        // For example, you can pass the report to the presenter
         presenter.onDeleteClicked(reportId)
     }
 }
