@@ -142,4 +142,5 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
             .addToBackStack(null) // Untuk menambahkan fragment ke dalam back stack
             .commit()
     }
+
 }
