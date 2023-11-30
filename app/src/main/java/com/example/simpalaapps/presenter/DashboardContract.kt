@@ -1,16 +1,17 @@
 package com.example.simpalaapps.presenter
 
 import com.example.simpalaapps.model.ReportEntity
+import kotlinx.coroutines.CoroutineScope
 
 interface DashboardContract {
 
     interface View {
+        val lifecycleScope_: CoroutineScope
         fun showReports(reports: List<ReportEntity>)
-        // Tambahkan metode lain sesuai kebutuhan
     }
 
     interface Presenter {
+        fun injectDummyData()
         fun loadReports()
-        // Tambahkan metode lain sesuai kebutuhan
     }
 }

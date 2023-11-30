@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "reportType": "Litter",
+    "reporterName": "John Cenaa",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "photo": "https://example.com/photo1.jpg",
+    "reportingDate": "2023-12-01",
+    "reporterEmail": "john.doe@example.com"
+  },
+  {
+    "id": 2,
+    "reportType": "Illegal Dumping",
+    "reporterName": "Mulyanto Sutrisno",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "photo": "https://example.com/photo2.jpg",
+    "reportingDate": "2023-12-02",
+    "reporterEmail": "jane.smith@example.com"
+  },
+  {
+    "id": 3,
+    "reportType": "Illegal Dumping",
+    "reporterName": "Joko Supriyanto",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "photo": "https://example.com/photo2.jpg",
+    "reportingDate": "2023-12-02",
+    "reporterEmail": "jane.smith@example.com"
+  }
+]

@@ -15,6 +15,10 @@ class ReportRepository(private val reportDao: ReportDao) {
         reportDao.insertReport(report)
     }
 
+    suspend fun insertAll(reports: List<ReportEntity>) {
+        reportDao.insertAll(reports)
+    }
+
     fun updateReport(report: ReportEntity) {
         reportDao.updateReport(report)
     }
