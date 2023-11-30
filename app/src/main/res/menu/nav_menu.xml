@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Add Report" android:icon="@drawable/ic_form" android:id="@+id/formFragment"/>
+    <item android:title="Home" android:icon="@drawable/ic_dashboard" android:id="@+id/homeFragment"/>
+    <item android:title="Map" android:icon="@drawable/ic_map" android:id="@+id/mapFragment"/>
+</menu>
