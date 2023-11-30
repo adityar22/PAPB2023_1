@@ -8,6 +8,6 @@ interface FormReportContract {
     }
 
     interface Presenter {
-        fun submitReport(report: ReportEntity)
+        suspend fun submitReport(report: ReportEntity)
     }
 }

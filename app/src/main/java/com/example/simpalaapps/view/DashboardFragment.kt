@@ -20,7 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-class DashboardFragment : Fragment(), DashboardContract.View {
+class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnItemClickListener {
 
     private lateinit var presenter: DashboardContract.Presenter
     override val lifecycleScope_: CoroutineScope
@@ -39,25 +39,36 @@ class DashboardFragment : Fragment(), DashboardContract.View {
         // Inisialisasi presenter
         presenter = DashboardPresenter(this, AppDatabase.getInstance(requireContext()).reportDao(), repository, requireContext())
         // Load data
-        if (savedInstanceState == null) {
-            presenter.injectDummyData()
-        }
+//        if (savedInstanceState == null) {
+//            presenter.injectDummyData()
+//        }
 
         lifecycleScope.launch {
             presenter.loadReports()
         }
+
         return view
     }
 
     override fun showReports(reports: List<ReportEntity>) {
         // Tampilkan data di RecyclerView
+        val adapter = ReportAdapter(reports)
+        adapter.setOnItemClickListener(this)
         val recyclerView: RecyclerView = view?.findViewById(R.id.recyclerView)!!
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = ReportAdapter(reports)
+        recyclerView.adapter = adapter
+    }
+
+    override fun onItemClick(report: ReportEntity) {
+        // Handle item click if needed
+    }
+
+    override fun onViewDetailClick(report: ReportEntity) {
+        showReportDetail(report)
     }
 
     private fun showReportDetail(report: ReportEntity) {
-        val detailFragment = DetailReportFragment.newInstance(report.id)
+        val detailFragment = DetailReportFragment.newInstance(report.id!!)
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, detailFragment)

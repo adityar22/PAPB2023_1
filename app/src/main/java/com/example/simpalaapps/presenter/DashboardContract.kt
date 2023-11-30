@@ -11,7 +11,7 @@ interface DashboardContract {
     }
 
     interface Presenter {
-        fun injectDummyData()
+//        fun injectDummyData()
         fun loadReports()
     }
 }

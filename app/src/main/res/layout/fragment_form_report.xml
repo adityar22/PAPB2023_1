@@ -38,35 +38,68 @@
         android:hint="Longitude"
         android:inputType="numberDecimal"/>
 
-    <EditText
-        android:id="@+id/editTextPhoto"
+    <!-- Replace EditText for Photo with Button to Choose File or Camera -->
+    <Button
+        android:id="@+id/buttonChoosePhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextLongitude"
         android:layout_marginTop="8dp"
-        android:hint="Photo URL"/>
+        android:text="Choose Photo"/>
 
+    <!-- Add EditText for Description -->
     <EditText
-        android:id="@+id/editTextReportingDate"
+        android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPhoto"
+        android:layout_below="@+id/buttonChoosePhoto"
         android:layout_marginTop="8dp"
-        android:hint="Reporting Date"/>
+        android:hint="Description"/>
+    <TextView
+        android:id="@+id/textSelectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextDescription"
+        android:layout_marginTop="8dp"
+        android:text="Selected Date: DD/MM/YYYY"/>
+
+    <!-- Replace EditText for Reporting Date with DatePicker -->
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSelectedDate"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/editTextReporterEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextReportingDate"
+        android:layout_below="@+id/datePicker"
         android:layout_marginTop="8dp"
         android:hint="Reporter Email"/>
 
+    <!-- Add Cancel Button with Red Color -->
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextReporterEmail"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"
+        android:text="Cancel"
+        android:background="#FAFAFA"
+        android:textColor="#FAFAFA"/>
+
+    <!-- Add Submit Button with Blue Color -->
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextReporterEmail"
         android:layout_marginTop="16dp"
-        android:text="Submit Report"/>
+        android:layout_alignParentEnd="true"
+        android:text="Submit Report"
+        android:textColor="#FAFAFA"/>
 </RelativeLayout>

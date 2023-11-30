@@ -4,13 +4,13 @@ import com.example.simpalaapps.model.ReportEntity
 
 interface DetailReportContract {
     interface Presenter {
-        fun onViewCreated(reportId: Int)
-        fun onDeleteClicked(reportId: Int)
+        suspend fun onViewCreated(reportId: Long)
+        fun onDeleteClicked(reportId: Long)
     }
 
     interface View {
         fun showReportDetails(report: ReportEntity)
-        fun onDeleteClicked(reportId: Int)
+        fun onDeleteClicked(reportId: Long)
     }
 }
 

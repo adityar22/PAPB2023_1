@@ -36,13 +36,13 @@ class DashboardPresenter(
         }
     }
 
-    override fun injectDummyData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val dummyData = getDummyData(context)
-            repository.insertAll(dummyData)
-            loadReports()
-        }
-    }
+//    override fun injectDummyData() {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val dummyData = getDummyData(context)
+//            repository.insertAll(dummyData)
+//            loadReports()
+//        }
+//    }
 
     private fun getDummyData(context: Context): List<ReportEntity> {
         val jsonString: String? = readJsonFromAssets(context,"dummy_data.json")

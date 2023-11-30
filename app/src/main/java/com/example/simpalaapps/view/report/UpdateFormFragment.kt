@@ -2,7 +2,6 @@ package com.example.simpalaapps.view.report
 
 // UpdateFormFragment.kt
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,10 +28,10 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         private const val ARG_REPORTER_NAME = "arg_reporter_name"
         // Add more constants for other fields as needed
 
-        fun newInstance(reportId: Int, reportType: String, reporterName: String): UpdateFormFragment {
+        fun newInstance(reportId: Long, reportType: String, reporterName: String): UpdateFormFragment {
             val fragment = UpdateFormFragment()
             val args = Bundle()
-            args.putInt(ARG_REPORT_ID, reportId)
+            args.putLong(ARG_REPORT_ID, reportId)
             args.putString(ARG_REPORT_TYPE, reportType)
             args.putString(ARG_REPORTER_NAME, reporterName)
             // Add more arguments for other fields as needed
@@ -51,12 +50,12 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         presenter = UpdateFormPresenter(this)
 
         // Retrieve report from arguments
-        val reportId = arguments?.getInt(ARG_REPORT_ID) ?: 0
+        val reportId = arguments?.getLong(ARG_REPORT_ID) ?: 0
         val reportType = arguments?.getString(ARG_REPORT_TYPE) ?: ""
         val reporterName = arguments?.getString(ARG_REPORTER_NAME) ?: ""
         // Retrieve other fields as needed
 
-        report = ReportEntity(reportId, reportType, reporterName, 0.0, 0.0, "", "", "")
+        report = ReportEntity(reportId, reportType, reporterName,"", 0.0, 0.0, ByteArray(0), "", "")
         // Create the report using the retrieved values, set default values as needed
 
         // Find views
@@ -85,6 +84,7 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
             report.id,
             etReportType.text.toString(),
             etReporterName.text.toString(),
+            report.reportDesc,
             report.latitude,
             report.longitude,
             report.photo,

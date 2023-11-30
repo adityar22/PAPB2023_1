@@ -9,28 +9,30 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import com.example.simpalaapps.R
 import com.example.simpalaapps.model.AppDatabase
 import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.detail.DetailReportContract
 import com.example.simpalaapps.presenter.detail.DetailReportPresenter
 import com.example.simpalaapps.presenter.detail.ReportRepository
+import kotlinx.coroutines.launch
 
 // DetailReportFragment.kt
 
 class DetailReportFragment : Fragment(), DetailReportContract.View {
 
     private lateinit var presenter: DetailReportContract.Presenter
-    private var reportId: Int = 0
+    private var reportId: Long = 0
     private lateinit var report: ReportEntity
 
     companion object {
         private const val ARG_REPORT_ID = "arg_report_id"
 
-        fun newInstance(reportId: Int): DetailReportFragment {
+        fun newInstance(reportId: Long): DetailReportFragment {
             val fragment = DetailReportFragment()
             val args = Bundle()
-            args.putInt(ARG_REPORT_ID, reportId)
+            args.putLong(ARG_REPORT_ID, reportId)
             fragment.arguments = args
             return fragment
         }
@@ -42,15 +44,18 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail_report, container, false)
 
-        reportId = arguments?.getInt(ARG_REPORT_ID) ?: 0
+        reportId = arguments?.getLong(ARG_REPORT_ID) ?: 0
 
         val reportDao = AppDatabase.getInstance(requireContext()).reportDao()
         val repository = ReportRepository(reportDao)
 
         // Use let to perform the cast within a safe block
-        presenter = DetailReportPresenter(this, repository).also {
-            it.onViewCreated(reportId)
+
+        presenter = DetailReportPresenter(this, repository)
+        lifecycleScope.launch {
+            presenter.onViewCreated(reportId)
         }
+
 
         val btnUpdate: Button = view.findViewById(R.id.btnUpdate)
         val btnDelete: Button = view.findViewById(R.id.btnDelete)
@@ -72,7 +77,7 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
         // Create an instance of the UpdateFormFragment with the report details
         val updateFormFragment = UpdateFormFragment.newInstance(
-            report.id,
+            report.id!!,
             report.reportType,
             report.reporterName
             // Pass other fields as needed...
@@ -85,7 +90,7 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             .commit()
     }
 
-    private fun showDeleteConfirmationDialog(reportId: Int) {
+    private fun showDeleteConfirmationDialog(reportId: Long) {
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Delete Confirmation")
         alertDialogBuilder.setMessage("Are you sure you want to delete this report?")
@@ -111,14 +116,17 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         val reporterEmailTextView: TextView = requireView().findViewById(R.id.reporterEmailTextView)
 
         // Set values from the ReportEntity to TextView
-        reportTypeTextView.text = "Report Type: ${report.reportType}"
-        reporterNameTextView.text = "Reporter Name: ${report.reporterName}"
-        locationTextView.text = "Location: ${report.latitude}, ${report.longitude}"
-        reportingDateTextView.text = "Reporting Date: ${report.reportingDate}"
-        reporterEmailTextView.text = "Reporter Email: ${report.reporterEmail}"
+        report?.let {
+            // Set values from the ReportEntity to TextView
+            reportTypeTextView.text = "Report Type: ${it.reportType}"
+            reporterNameTextView.text = "Reporter Name: ${it.reporterName}"
+            locationTextView.text = "Location: ${it.latitude}, ${it.longitude}"
+            reportingDateTextView.text = "Reporting Date: ${it.reportingDate}"
+            reporterEmailTextView.text = "Reporter Email: ${it.reporterEmail}"
+        }
     }
 
-    override fun onDeleteClicked(reportId: Int) {
+    override fun onDeleteClicked(reportId: Long) {
         // Implement the onDeleteClicked logic here
         // For example, you can pass the report to the presenter
         presenter.onDeleteClicked(reportId)

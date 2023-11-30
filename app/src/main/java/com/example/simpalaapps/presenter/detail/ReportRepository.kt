@@ -7,7 +7,7 @@ import com.example.simpalaapps.model.ReportEntity
 
 class ReportRepository(private val reportDao: ReportDao) {
 
-    fun getReportById(reportId: Int): ReportEntity? {
+    fun getReportById(reportId: Long): ReportEntity? {
         return reportDao.getReportById(reportId)
     }
 
@@ -15,15 +15,15 @@ class ReportRepository(private val reportDao: ReportDao) {
         reportDao.insertReport(report)
     }
 
-    suspend fun insertAll(reports: List<ReportEntity>) {
-        reportDao.insertAll(reports)
-    }
+//    suspend fun insertAll(reports: List<ReportEntity>) {
+//        reportDao.insertAll(reports)
+//    }
 
     fun updateReport(report: ReportEntity) {
         reportDao.updateReport(report)
     }
 
-    fun deleteReport(reportId: Int) {
+    fun deleteReport(reportId: Long) {
         reportDao.deleteReport(reportId)
     }
 }
