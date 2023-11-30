@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -87,17 +88,22 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         // Tambahkan logika UI dan onClickListener untuk menyimpan laporan
         submitButton.setOnClickListener {
             val report = createReportFromInput()
-            Log.i(report.reportType, report.reporterEmail)
 
-            lifecycleScope.launch {
-                presenter.submitReport(report)
+            if (report.id != null) {
+                lifecycleScope.launch {
+                    presenter.submitReport(report)
+                }
+
+                backToMainActivity()
             }
-
-            backToMainActivity();
         }
 
         photoButton.setOnClickListener {
             openCamera()
+        }
+
+        cancelButton.setOnClickListener {
+            backToMainActivity()
         }
 
         return view
@@ -167,14 +173,36 @@ class FormReportFragment : Fragment(), FormReportContract.View {
     private fun createReportFromInput(): ReportEntity {
         val reportType = reportTypeEditText.text.toString()
         val reporterName = reporterNameEditText.text.toString()
-        val latitude = latitudeEditText.text.toString().toDouble()
-        val longitude = longitudeEditText.text.toString().toDouble()
+        val latitudeStr = latitudeEditText.text.toString()
+        val longitudeStr = longitudeEditText.text.toString()
         val description = descriptionEditText.text.toString()
+        val reporterEmail = reporterEmailEditText.text.toString()
+
+        // Pemeriksaan validasi untuk memastikan EditText tidak boleh kosong
+        if (reportType.isEmpty() || reporterName.isEmpty() || latitudeStr.isEmpty() ||
+            longitudeStr.isEmpty() || description.isEmpty() || reporterEmail.isEmpty()
+        ) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            return ReportEntity(
+                id = null,
+                reportType = "",
+                reporterName = "",
+                latitude = 0.0,
+                longitude = 0.0,
+                photo = byteArrayOf(),
+                reportingDate = "",
+                reporterEmail = "",
+                reportDesc = ""
+            )
+        }
+
+        val latitude = latitudeStr.toDouble()
+        val longitude = longitudeStr.toDouble()
+
         val day = datePicker.dayOfMonth
         val month = datePicker.month + 1 // Month is zero-based
         val year = datePicker.year
         val reportingDate = "$year-$month-$day"
-        val reporterEmail = reporterEmailEditText.text.toString()
 
         val photoByteArray: ByteArray = currentPhotoUri?.let { retrievePhotoByteArray(it) } ?: byteArrayOf()
 

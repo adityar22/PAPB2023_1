@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextDescription"
         android:layout_marginTop="8dp"
-        android:text="Selected Date: DD/MM/YYYY"/>
+        android:text="Today's Date: DD/MM/YYYY"/>
 
     <!-- Replace EditText for Reporting Date with DatePicker -->
     <DatePicker

@@ -6,17 +6,28 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.simpalaapps.model.news.NewsDao
+import com.example.simpalaapps.model.news.NewsEntity
 
-@Database(entities = [ReportEntity::class], version = 3)
+@Database(entities = [ReportEntity::class, NewsEntity::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reportDao(): ReportDao
+    abstract fun newsDao(): NewsDao
 
     companion object {
         private var instance: AppDatabase? = null
 
-        private val MIGRATION_1_2: Migration = object : Migration(2, 3) {
+        private val MIGRATION_1_2: Migration = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Define your migration logic here
+                database.execSQL("CREATE TABLE IF NOT EXISTS news_table (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "newsTitle TEXT, " +
+                        "newsTag TEXT, " +
+                        "newsContent TEXT, " +
+                        "photo BLOB, " +
+                        "newsDate TEXT, " +
+                        "isPremium TEXT)")
                 database.execSQL("CREATE TABLE IF NOT EXISTS new_report_table (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         "reportType TEXT, " +
@@ -24,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                         "reportDesc TEXT, " +
                         "latitude REAL, " +
                         "longitude REAL, " +
-                        "photo BLOB, " +  // Menggunakan BLOB untuk menyimpan array byte (ByteArray)
+                        "photo BLOB, " +
                         "reportingDate TEXT, " +
                         "reporterEmail TEXT)")
 

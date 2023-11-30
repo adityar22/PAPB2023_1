@@ -1,6 +1,7 @@
 package com.example.simpalaapps.presenter.detail
 
 import com.example.simpalaapps.model.ReportEntity
+import com.example.simpalaapps.model.ReportRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.simpalaapps.presenter.detail
+package com.example.simpalaapps.model
 
 import android.util.Log
 import com.example.simpalaapps.model.ReportDao

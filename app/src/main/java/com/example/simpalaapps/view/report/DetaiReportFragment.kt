@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import com.example.simpalaapps.model.AppDatabase
 import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.detail.DetailReportContract
 import com.example.simpalaapps.presenter.detail.DetailReportPresenter
-import com.example.simpalaapps.presenter.detail.ReportRepository
+import com.example.simpalaapps.model.ReportRepository
 import com.example.simpalaapps.view.DashboardFragment
 import kotlinx.coroutines.launch
 

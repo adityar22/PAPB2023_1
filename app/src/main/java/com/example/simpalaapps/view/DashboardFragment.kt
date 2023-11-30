@@ -18,7 +18,7 @@ import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.model.ReportsResponse
 import com.example.simpalaapps.presenter.DashboardContract
 import com.example.simpalaapps.presenter.DashboardPresenter
-import com.example.simpalaapps.presenter.detail.ReportRepository
+import com.example.simpalaapps.model.ReportRepository
 import com.example.simpalaapps.retrofit.RetrofitInstance
 import com.example.simpalaapps.view.report.DetailReportFragment
 import kotlinx.coroutines.CoroutineScope
