@@ -80,7 +80,6 @@
         android:layout_marginTop="8dp"
         android:hint="Reporter Email"/>
 
-    <!-- Add Cancel Button with Red Color -->
     <Button
         android:id="@+id/buttonCancel"
         android:layout_width="wrap_content"

@@ -28,12 +28,29 @@
         android:layout_height="wrap_content"
         android:hint="Reporter Name"/>
 
-    <!-- Add more EditText views for other fields as needed -->
+    <EditText
+        android:id="@+id/etReportDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reporter Description"/>
+
+    <EditText
+        android:id="@+id/etReporterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reporter Email"/>
 
     <Button
         android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"/>
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/teal_700"
+        android:background=""
+        android:text="Cancel"/>
 
 </LinearLayout>
