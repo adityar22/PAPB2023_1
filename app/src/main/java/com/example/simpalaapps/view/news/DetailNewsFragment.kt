@@ -14,21 +14,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.simpalaapps.R
 import com.example.simpalaapps.model.AppDatabase
-import com.example.simpalaapps.model.ReportEntity
-import com.example.simpalaapps.model.ReportRepository
 import com.example.simpalaapps.model.news.NewsEntity
 import com.example.simpalaapps.model.news.NewsRepository
-import com.example.simpalaapps.presenter.detail.DetailReportContract
-import com.example.simpalaapps.presenter.detail.DetailReportPresenter
 import com.example.simpalaapps.presenter.detail.news.DetailNewsContract
 import com.example.simpalaapps.presenter.detail.news.DetailNewsPresenter
 import com.example.simpalaapps.view.DashboardFragment
-import com.example.simpalaapps.view.report.DetailReportFragment
-import com.example.simpalaapps.view.report.UpdateFormFragment
 import kotlinx.coroutines.launch
 
 class DetailNewsFragment: Fragment(), DetailNewsContract.View {
@@ -52,7 +45,7 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail_report, container, false)
+        val view = inflater.inflate(R.layout.fragment_detail_news, container, false)
 
         newsId = arguments?.getLong(ARG_NEWS_ID) ?: 0
 
@@ -84,7 +77,6 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
     }
 
     override fun showNewsDetails(news: NewsEntity) {
-        // Update UI with the report details
         this.news = news
 
         val newsTitleTextView: TextView = requireView().findViewById(R.id.newsTitleTextView)
@@ -93,9 +85,7 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         val newsContentTextView: TextView = requireView().findViewById(R.id.newsContentTextView)
         val newsDateTextView: TextView = requireView().findViewById(R.id.newsDateTextView)
 
-        // Set values from the ReportEntity to TextView
         news?.let {
-            // Set values from the ReportEntity to TextView
             newsTitleTextView.text = "${it.newsTitle}"
             newsTagTextView.text = "Tag: ${it.newsTag}"
             newsContentTextView.text = "${it.newsContent}"

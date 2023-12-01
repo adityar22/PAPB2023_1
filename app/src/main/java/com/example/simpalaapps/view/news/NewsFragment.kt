@@ -20,7 +20,6 @@ import com.example.simpalaapps.model.news.NewsResponse
 import com.example.simpalaapps.presenter.news.NewsContract
 import com.example.simpalaapps.presenter.news.NewsPresenter
 import com.example.simpalaapps.retrofit.RetrofitInstance
-import com.example.simpalaapps.view.report.DetailReportFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -130,7 +129,7 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     }
 
     private fun showNewsDetail(news: NewsEntity) {
-        val detailNewsFragment = DetailReportFragment.newInstance(news.id!!)
+        val detailNewsFragment = DetailNewsFragment.newInstance(news.id!!)
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, detailNewsFragment)
