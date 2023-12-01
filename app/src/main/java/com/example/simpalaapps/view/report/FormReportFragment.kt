@@ -192,7 +192,8 @@ class FormReportFragment : Fragment(), FormReportContract.View {
                 photo = byteArrayOf(),
                 reportingDate = "",
                 reporterEmail = "",
-                reportDesc = ""
+                reportDesc = "",
+                isReadOnly = false
             )
         }
 
@@ -215,7 +216,8 @@ class FormReportFragment : Fragment(), FormReportContract.View {
             photo = photoByteArray,
             reportingDate = reportingDate,
             reporterEmail = reporterEmail,
-            reportDesc = description
+            reportDesc = description,
+            isReadOnly = false
         )
     }
 }

@@ -67,9 +67,8 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
         injectDummyData()
     }
 
-    private suspend fun generateReport(news: List<NewsEntity>) {
+    private suspend fun generateNews(news: List<NewsEntity>) {
         withContext(Dispatchers.IO) {
-//            reportDao.insertReport(reports)
             newsDao.insertAll(news)
         }
     }
@@ -96,11 +95,11 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 if(response.body() != null){
                     val news = arrayListOf<NewsEntity>()
-                    for (r in response.body()!!.reports){
-                        news.add(convertResponseNewsToEntity(r))
+                    for (n in response.body()!!.news){
+                        news.add(convertResponseNewsToEntity(n))
                     }
                     lifecycleScope.launch {
-                        generateReport(news)
+                        generateNews(news)
                     }
                 }
             }
@@ -126,10 +125,10 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     }
 
     override fun onViewDetailClick(news: NewsEntity) {
-        showReportDetail(news)
+        showNewsDetail(news)
     }
 
-    private fun showReportDetail(news: NewsEntity) {
+    private fun showNewsDetail(news: NewsEntity) {
         val detailNewsFragment = DetailReportFragment.newInstance(news.id!!)
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction()
