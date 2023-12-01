@@ -1,12 +1,12 @@
 package com.example.simpalaapps
 
-import MapFragment
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.simpalaapps.databinding.ActivityMainBinding
 import com.example.simpalaapps.view.DashboardFragment
+import com.example.simpalaapps.view.news.NewsFragment
 import com.example.simpalaapps.view.report.FormReportFragment
 
 class MainActivity : AppCompatActivity() {
@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(FormReportFragment())
                     return@setOnItemSelectedListener true
                 }
-                R.id.navigation_map -> {
-                    loadFragment(MapFragment())
+                R.id.navigation_news -> {
+                    loadFragment(NewsFragment())
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener  false

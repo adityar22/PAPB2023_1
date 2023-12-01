@@ -12,4 +12,11 @@ object RetrofitInstance {
             .build()
             .create(ReportApi::class.java)
     }
+    val newsApi:NewsApi by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api-papb.saddansyah.space/api/news")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsApi::class.java)
+    }
 }

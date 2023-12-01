@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_form_report" />
 
     <fragment
-        android:id="@+id/navigation_map"
-        android:name="com.example.simpalaapps.view.map.MapFragment"
+        android:id="@+id/navigation_news"
+        android:name="com.example.simpalaapps.view.news.NewsFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
 </navigation>

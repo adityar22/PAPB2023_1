@@ -20,12 +20,12 @@ abstract class AppDatabase : RoomDatabase() {
         private val MIGRATION_1_2: Migration = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Define your migration logic here
-                database.execSQL("CREATE TABLE IF NOT EXISTS news_table (" +
+                database.execSQL("CREATE TABLE IF NOT EXISTS new_news_table (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         "newsTitle TEXT, " +
                         "newsTag TEXT, " +
                         "newsContent TEXT, " +
-                        "photo BLOB, " +
+                        "photo TEXT, " +
                         "newsDate TEXT, " +
                         "isPremium TEXT)")
                 database.execSQL("CREATE TABLE IF NOT EXISTS new_report_table (" +
@@ -40,12 +40,14 @@ abstract class AppDatabase : RoomDatabase() {
                         "reporterEmail TEXT)")
 
                 // Add a new column 'report_desc'
-                database.execSQL("ALTER TABLE report_table ADD COLUMN report_desc TEXT")
+                // database.execSQL("ALTER TABLE report_table ADD COLUMN report_desc TEXT")
                 // Drop the old table
                 database.execSQL("DROP TABLE IF EXISTS report_table")
+                database.execSQL("DROP TABLE IF EXISTS news_table")
 
                 // Rename the new table to the old table name
                 database.execSQL("ALTER TABLE new_report_table RENAME TO report_table")
+                database.execSQL("ALTER TABLE new_news_table RENAME TO news_table")
             }
         }
         fun getInstance(context: Context): AppDatabase {
