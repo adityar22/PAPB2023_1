@@ -8,8 +8,16 @@ import com.example.simpalaapps.model.ReportEntity
 
 class ReportRepository(private val reportDao: ReportDao) {
 
+    fun getAllReports(): List<ReportEntity> {
+        return reportDao.getAllReports()
+    }
+
     fun getReportById(reportId: Long): ReportEntity? {
         return reportDao.getReportById(reportId)
+    }
+
+    fun searchReport(reportType: String?): List<ReportEntity> {
+        return reportDao.searchReport(reportType)
     }
 
     fun insertReport(report: ReportEntity) {

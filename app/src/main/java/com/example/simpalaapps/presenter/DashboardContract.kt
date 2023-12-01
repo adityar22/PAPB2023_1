@@ -11,8 +11,8 @@ interface DashboardContract {
     }
 
     interface Presenter {
-//        fun injectDummyData()
         fun loadReports()
         fun searchReport(query: String)
+        fun insertAllReport(reports: List<ReportEntity>)
     }
 }

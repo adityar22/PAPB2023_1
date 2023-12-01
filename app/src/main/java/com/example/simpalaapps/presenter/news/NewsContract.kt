@@ -11,7 +11,6 @@ interface NewsContract {
     }
 
     interface Presenter {
-        //        fun injectDummyData()
         fun loadNews()
     }
 }

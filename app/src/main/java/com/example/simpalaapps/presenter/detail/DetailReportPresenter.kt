@@ -18,7 +18,6 @@ class DetailReportPresenter(
     private lateinit var report: ReportEntity
 
     override suspend fun onViewCreated(reportId: Long) {
-        // Load report details from the repository based on reportId
         report = withContext(Dispatchers.IO) {
             repository.getReportById(reportId)!!
         }
@@ -28,12 +27,9 @@ class DetailReportPresenter(
     }
 
     override fun onDeleteClicked(reportId: Long) {
-        // Handle delete button click
         CoroutineScope(Dispatchers.IO).launch {
             repository.deleteReport(reportId)
-            // You may want to navigate back to the previous screen or show a success message
         }
-        // You may want to navigate back to the previous screen or show a success message
     }
 }
 

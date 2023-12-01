@@ -48,12 +48,10 @@ class ReportAdapter(private val reports: List<ReportEntity>) :
             textReporterName.text = report.reporterName
             textReportingDate.text = report.reportingDate
 
-            // Set onClickListener for the item
             itemView.setOnClickListener {
                 listener?.onItemClick(report)
             }
 
-            // Set onClickListener for the "View Detail" button
             buttonViewDetail.setOnClickListener {
                 listener?.onViewDetailClick(report)
             }

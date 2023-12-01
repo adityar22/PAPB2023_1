@@ -31,7 +31,6 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
 
     companion object {
         private const val ARG_NEWS_ID = "arg_news_id"
-
         fun newInstance(newsId: Long): DetailNewsFragment {
             val fragment = DetailNewsFragment()
             val args = Bundle()
@@ -52,8 +51,6 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         val newsDao = AppDatabase.getInstance(requireContext()).newsDao()
         val repository = NewsRepository(newsDao)
 
-        // Use let to perform the cast within a safe block
-
         presenter = DetailNewsPresenter(this, repository)
         lifecycleScope.launch {
             presenter.onViewCreated(newsId)
@@ -67,11 +64,9 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
         mapIntent.setPackage("com.google.android.apps.maps")
 
-        // Check if there's an app to handle the intent
         if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(mapIntent)
         } else {
-            // Handle the case where Google Maps is not installed
             Toast.makeText(requireContext(), "Google Maps app is not installed", Toast.LENGTH_SHORT).show()
         }
     }
@@ -108,16 +103,4 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         }
     }
 
-    private fun ByteArray.toBitmap(): Bitmap {
-        return BitmapFactory.decodeByteArray(this, 0, this.size)
-    }
-
-    private fun backToMainActivity () {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val destinationFragment = DashboardFragment()
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.replace(R.id.fragmentContainer, destinationFragment)
-        fragmentTransaction.commit()
-    }
 }

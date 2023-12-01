@@ -21,7 +21,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.simpalaapps.R
 import com.example.simpalaapps.model.AppDatabase
+import com.example.simpalaapps.model.ReportDao
 import com.example.simpalaapps.model.ReportEntity
+import com.example.simpalaapps.model.ReportRepository
 import com.example.simpalaapps.presenter.form.FormReportContract
 import com.example.simpalaapps.presenter.form.FormReportPresenter
 import com.example.simpalaapps.view.DashboardFragment
@@ -35,6 +37,8 @@ import java.util.Locale
 class FormReportFragment : Fragment(), FormReportContract.View {
 
     private lateinit var presenter: FormReportContract.Presenter
+    private lateinit var repository: ReportRepository
+    private lateinit var reportDao: ReportDao
 
     private lateinit var reportTypeEditText: EditText
     private lateinit var reporterNameEditText: EditText
@@ -48,7 +52,6 @@ class FormReportFragment : Fragment(), FormReportContract.View {
     private lateinit var submitButton: Button
 
     private var currentPhotoUri: Uri? = null
-
     private var takePictureLauncher: ActivityResultLauncher<Uri>? = null
 
     companion object {
@@ -61,8 +64,9 @@ class FormReportFragment : Fragment(), FormReportContract.View {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_form_report, container, false)
 
-        // Inisialisasi presenter
-        presenter = FormReportPresenter(this, AppDatabase.getInstance(requireContext()).reportDao())
+        reportDao = AppDatabase.getInstance(requireContext()).reportDao()
+        repository = ReportRepository(reportDao)
+        presenter = FormReportPresenter(this, AppDatabase.getInstance(requireContext()).reportDao(), repository)
 
         reportTypeEditText = view.findViewById(R.id.editTextReportType)
         reporterNameEditText = view.findViewById(R.id.editTextReporterName)
@@ -77,15 +81,12 @@ class FormReportFragment : Fragment(), FormReportContract.View {
 
         takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success: Boolean ->
             if (success) {
-                // The photo has been taken, and you can use currentPhotoUri to get the URI of the photo
                 currentPhotoUri?.let {
-                    // Use it as needed, for example, in your createReportFromInput function
                     val photoByteArray: ByteArray = retrievePhotoByteArray(it)
                 }
             }
         }
 
-        // Tambahkan logika UI dan onClickListener untuk menyimpan laporan
         submitButton.setOnClickListener {
             val report = createReportFromInput()
 
@@ -93,7 +94,6 @@ class FormReportFragment : Fragment(), FormReportContract.View {
                 lifecycleScope.launch {
                     presenter.submitReport(report)
                 }
-
                 backToMainActivity()
             }
         }
@@ -139,7 +139,6 @@ class FormReportFragment : Fragment(), FormReportContract.View {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
@@ -162,9 +161,7 @@ class FormReportFragment : Fragment(), FormReportContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The photo has been taken, and you can use currentPhotoUri to get the URI of the photo
             currentPhotoUri?.let {
-                // Use it as needed, for example, in your createReportFromInput function
                 val photoByteArray: ByteArray = retrievePhotoByteArray(it)
             }
         }
@@ -178,7 +175,6 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         val description = descriptionEditText.text.toString()
         val reporterEmail = reporterEmailEditText.text.toString()
 
-        // Pemeriksaan validasi untuk memastikan EditText tidak boleh kosong
         if (reportType.isEmpty() || reporterName.isEmpty() || latitudeStr.isEmpty() ||
             longitudeStr.isEmpty() || description.isEmpty() || reporterEmail.isEmpty()
         ) {

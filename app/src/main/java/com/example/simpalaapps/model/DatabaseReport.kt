@@ -19,7 +19,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private val MIGRATION_1_2: Migration = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                // Define your migration logic here
+
+                // Migrate database
                 database.execSQL("CREATE TABLE IF NOT EXISTS new_news_table (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         "newsTitle TEXT, " +
@@ -40,13 +41,11 @@ abstract class AppDatabase : RoomDatabase() {
                         "reportingDate TEXT, " +
                         "reporterEmail TEXT)")
 
-                // Add a new column 'report_desc'
-                // database.execSQL("ALTER TABLE report_table ADD COLUMN report_desc TEXT")
-                // Drop the old table
+                // Drop table if exist
                 database.execSQL("DROP TABLE IF EXISTS report_table")
                 database.execSQL("DROP TABLE IF EXISTS news_table")
 
-                // Rename the new table to the old table name
+                // Renaming it again
                 database.execSQL("ALTER TABLE new_report_table RENAME TO report_table")
                 database.execSQL("ALTER TABLE new_news_table RENAME TO news_table")
             }
@@ -59,7 +58,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
-                .addMigrations(MIGRATION_1_2)  // Use addMigrations instead of addMigration
+                .addMigrations(MIGRATION_1_2)
                 .build()
         }
     }

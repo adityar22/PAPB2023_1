@@ -54,12 +54,10 @@ class NewsAdapter(private val news: List<NewsEntity>):
             textNewsExcerpt.text = news.newsExcerpt
             Picasso.get().load(news.photo).into(imageView)
 
-            // Set onClickListener for the item
             itemView.setOnClickListener {
                 listener?.onItemClick(news)
             }
 
-            // Set onClickListener for the "View Detail" button
             buttonViewDetail.setOnClickListener {
                 listener?.onViewDetailClick(news)
             }

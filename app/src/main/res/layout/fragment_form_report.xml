@@ -27,7 +27,7 @@
         android:layout_below="@+id/editTextReporterName"
         android:layout_marginTop="8dp"
         android:hint="Latitude"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberSigned|numberDecimal"/>
 
     <EditText
         android:id="@+id/editTextLongitude"
@@ -36,7 +36,7 @@
         android:layout_below="@+id/editTextLatitude"
         android:layout_marginTop="8dp"
         android:hint="Longitude"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberSigned|numberDecimal"/>
 
     <!-- Replace EditText for Photo with Button to Choose File or Camera -->
     <Button

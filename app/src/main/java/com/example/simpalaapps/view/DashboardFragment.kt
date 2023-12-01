@@ -52,12 +52,7 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
 
         reportDao = AppDatabase.getInstance(requireContext()).reportDao()
         repository = ReportRepository(reportDao)
-        // Inisialisasi presenter
         presenter = DashboardPresenter(this, AppDatabase.getInstance(requireContext()).reportDao(), repository, requireContext())
-        // Load data
-//        if (savedInstanceState == null) {
-//            presenter.injectDummyData()
-//        }
 
         lifecycleScope.launch {
             presenter.loadReports()
@@ -87,12 +82,9 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
     }
 
     private suspend fun generateReport(reports: List<ReportEntity>) {
-        withContext(Dispatchers.IO) {
-            reportDao.insertAll(reports)
-        }
+        presenter.insertAllReport(reports)
     }
 
-    // temp function to prevent cast error
     private fun convertResponseReportToEntity(currentObject: Report): ReportEntity {
         val byteArray = currentObject.photo.toByteArray()
         val updatedObject = ReportEntity(
@@ -108,7 +100,6 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
             currentObject.isReadOnly
         )
 
-        // Perbarui objek pada indeks tertentu di dalam list
         return updatedObject
 
     }
@@ -144,7 +135,7 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
     }
 
     override fun onItemClick(report: ReportEntity) {
-        // Handle item click if needed
+        // Implemented soon
     }
 
     override fun onViewDetailClick(report: ReportEntity) {
@@ -156,7 +147,7 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, detailFragment)
-            .addToBackStack(null) // Untuk menambahkan fragment ke dalam back stack
+            .addToBackStack(null)
             .commit()
     }
 

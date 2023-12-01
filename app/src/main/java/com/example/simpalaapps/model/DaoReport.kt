@@ -15,19 +15,19 @@ interface ReportDao {
     fun insertReport(report: ReportEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(reports: List<ReportEntity>): List<Long>  // Return type is List<Long>
+    fun insertAll(reports: List<ReportEntity>): List<Long>
 
     @Query("SELECT * FROM report_table WHERE id = :reportId")
     fun getReportById(reportId: Long): ReportEntity
 
     @Update
-    fun updateReport(report: ReportEntity): Int  // Return type is Int
+    fun updateReport(report: ReportEntity): Int
 
     @Query("SELECT * FROM report_table WHERE reportType LIKE :reportType")
     fun searchReport(reportType: String?): List<ReportEntity>
 
     @Query("DELETE FROM report_table WHERE id = :reportId")
-    fun deleteReport(reportId: Long): Int  // Return type is Int
+    fun deleteReport(reportId: Long): Int
 
 
 }

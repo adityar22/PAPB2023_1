@@ -31,7 +31,6 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         private const val ARG_REPORTER_NAME = "arg_reporter_name"
         private const val ARG_REPORT_DESCRIPTION = "arg_report_description"
         private const val ARG_REPORTER_EMAIL = "arg_reporter_email"
-        // Add more constants for other fields as needed
 
         fun newInstance(report: ReportEntity): UpdateFormFragment {
             val fragment = UpdateFormFragment()
@@ -41,7 +40,7 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
             args.putString(ARG_REPORTER_NAME, report.reporterName)
             args.putString(ARG_REPORT_DESCRIPTION, report.reportDesc)
             args.putString(ARG_REPORTER_EMAIL, report.reporterEmail)
-            // Add more arguments for other fields as needed
+
             fragment.arguments = args
             return fragment
         }
@@ -53,7 +52,6 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update_form, container, false)
 
-        // Initialize presenter
         presenter = UpdateFormPresenter(this)
 
         // Retrieve report from arguments
@@ -64,13 +62,10 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         val reporterEmail = arguments?.getString(ARG_REPORTER_EMAIL) ?: ""
 
         report = ReportEntity(reportId, reportType, reporterName,reportDescription, 0.0, 0.0, ByteArray(0), "", reporterEmail, false)
-        // Create the report using the retrieved values, set default values as needed
 
-        // Find views
         etReportType= view.findViewById(R.id.etReportType)
         etReporterName = view.findViewById(R.id.etReporterName)
 
-        // Set default values from the report
         etReportType.setText(report.reportType)
         etReporterName.setText(report.reporterName)
 
@@ -84,8 +79,6 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
     }
 
     override fun onUpdateClicked() {
-        // Implement the logic to handle the update process
-        // You can pass the updated values to the presenter
         val updatedReport = ReportEntity(
             report.id,
             etReportType.text.toString(),
@@ -100,6 +93,4 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         )
         presenter.onUpdateClicked(updatedReport)
     }
-
-    // Implement other methods from UpdateFormContract.View as needed
 }

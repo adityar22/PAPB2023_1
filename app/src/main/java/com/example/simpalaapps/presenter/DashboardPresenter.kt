@@ -3,6 +3,7 @@ package com.example.simpalaapps.presenter
 import android.content.Context
 import com.example.simpalaapps.model.Report
 import com.example.simpalaapps.model.ReportDao
+import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.model.ReportRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,31 +16,35 @@ class DashboardPresenter(
     private val context: Context
 ) : DashboardContract.Presenter {
 
-    // Use 'lifecycleScope' from the Fragment, or if you're in a ViewModel, use 'viewModelScope'
     private val scope = view.lifecycleScope_
 
+    // Using coroutines to use other thread
     override fun loadReports() {
-        // Launch a coroutine to perform the database operation on a background thread
         scope.launch {
-            // Use 'withContext' to switch to the IO dispatcher for database operations
             val reports = withContext(Dispatchers.IO) {
-                reportDao.getAllReports()
+                repository.getAllReports()
             }
-
-            // Update UI on the main thread
             view.showReports(reports)
         }
     }
 
     override fun searchReport(query: String) {
         scope.launch {
-            // Use 'withContext' to switch to the IO dispatcher for database operations
             val reports = withContext(Dispatchers.IO) {
-                reportDao.searchReport("%$query%")
+                repository.searchReport("%$query%")
             }
 
-            // Update UI on the main thread
             view.showReports(reports)
         }
     }
+
+    override fun insertAllReport(reports: List<ReportEntity>) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                repository.insertAll(reports)
+            }
+        }
+    }
+
+
 }

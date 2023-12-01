@@ -47,7 +47,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_news, container, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -63,8 +62,7 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
 
         newsDao = AppDatabase.getInstance(requireContext()).newsDao()
         repository = NewsRepository(newsDao)
-        // Inisialisasi presenter
-        presenter = NewsPresenter(this, AppDatabase.getInstance(requireContext()).newsDao(), repository, requireContext())
+        presenter = NewsPresenter(this, repository, requireContext())
 
         lifecycleScope.launch {
             presenter.loadNews()
@@ -76,7 +74,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inject Dummy Data to Presenter
         injectDummyData()
     }
 
@@ -100,7 +97,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
             currentObject.isPremium
         )
 
-        // Perbarui objek pada indeks tertentu di dalam list
         return updatedObject
 
     }
@@ -116,8 +112,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
                     }
                     lifecycleScope.launch {
                         generateNews(news)
-
-                        // Show notification when news is successfully loaded
                         showNewsLoadedNotification()
                     }
                 }
@@ -145,7 +139,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
 
 
     override fun showNews(news: List<NewsEntity>) {
-        // Tampilkan data di RecyclerView
         adapter = NewsAdapter(news)
         adapter.setOnItemClickListener(this)
         recyclerView = view?.findViewById(R.id.recyclerView)!!
@@ -154,7 +147,7 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     }
 
     override fun onItemClick(news: NewsEntity) {
-        // Handle item click if needed
+        // Implemented soon
     }
 
     override fun onViewDetailClick(news: NewsEntity) {
@@ -166,7 +159,7 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, detailNewsFragment)
-            .addToBackStack(null) // Untuk menambahkan fragment ke dalam back stack
+            .addToBackStack(null)
             .commit()
     }
 

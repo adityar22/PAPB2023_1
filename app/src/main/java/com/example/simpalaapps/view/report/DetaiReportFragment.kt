@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.simpalaapps.R
 import com.example.simpalaapps.model.AppDatabase
+import com.example.simpalaapps.model.ReportDao
 import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.presenter.detail.DetailReportContract
 import com.example.simpalaapps.presenter.detail.DetailReportPresenter
@@ -34,6 +35,8 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
     private lateinit var presenter: DetailReportContract.Presenter
     private var reportId: Long = 0
     private lateinit var report: ReportEntity
+    private lateinit var repository: ReportRepository
+    private lateinit var reportDao: ReportDao
 
     private lateinit var btnUpdate: Button
     private lateinit var btnDelete: Button
@@ -59,12 +62,8 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
         reportId = arguments?.getLong(ARG_REPORT_ID) ?: 0
 
-        val reportDao = AppDatabase.getInstance(requireContext()).reportDao()
-        val repository = ReportRepository(reportDao)
-
-        // Use let to perform the cast within a safe block
-
-
+        reportDao = AppDatabase.getInstance(requireContext()).reportDao()
+        repository = ReportRepository(reportDao)
         presenter = DetailReportPresenter(this, repository)
 
         btnUpdate = view.findViewById(R.id.btnUpdate)
@@ -99,28 +98,23 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(geoUri))
         mapIntent.setPackage("com.google.android.apps.maps")
 
-        // Check if there's an app to handle the intent
         if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(mapIntent)
         } else {
-            // Handle the case where Google Maps is not installed
             Toast.makeText(requireContext(), "Google Maps app is not installed", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun openUpdateFormFragment() {
-        // Get the fragment manager
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
 
-        // Create an instance of the UpdateFormFragment with the report details
         val updateFormFragment = UpdateFormFragment.newInstance(
             report
         )
 
-        // Replace the current fragment with the UpdateFormFragment
         fragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, updateFormFragment)
-            .addToBackStack(null)  // Optional: Adds the transaction to the back stack
+            .addToBackStack(null)
             .commit()
     }
 
@@ -141,7 +135,6 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
     }
 
     override fun showReportDetails(report: ReportEntity) {
-        // Update UI with the report details
         this.report = report
 
         val reportTypeTextView: TextView = requireView().findViewById(R.id.reportTypeTextView)
@@ -152,7 +145,6 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         val reportingDateTextView: TextView = requireView().findViewById(R.id.reportingDateTextView)
         val reporterEmailTextView: TextView = requireView().findViewById(R.id.reporterEmailTextView)
 
-        // Set values from the ReportEntity to TextView
         report?.let {
             // Set values from the ReportEntity to TextView
             reportTypeTextView.text = "Report Type: ${it.reportType}"

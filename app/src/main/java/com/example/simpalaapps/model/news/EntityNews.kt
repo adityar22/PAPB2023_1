@@ -2,8 +2,6 @@ package com.example.simpalaapps.model.news
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.simpalaapps.model.Report
-
 
 @Entity(tableName = "news_table")
 data class NewsEntity(

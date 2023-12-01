@@ -15,15 +15,15 @@ interface NewsDao {
     fun insertNews(news: NewsEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(news: List<NewsEntity>): List<Long>  // Return type is List<Long>
+    fun insertAll(news: List<NewsEntity>): List<Long>
 
     @Query("SELECT * FROM news_table WHERE id = :newsId")
     fun getNewsById(newsId: Long): NewsEntity
 
     @Update
-    fun updateNews(news: NewsEntity): Int  // Return type is Int
+    fun updateNews(news: NewsEntity): Int
 
     @Query("DELETE FROM news_table WHERE id = :newsId")
-    fun deleteNews(newsId: Long): Int  // Return type is Int
+    fun deleteNews(newsId: Long): Int
 
 }
