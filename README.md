@@ -20,7 +20,9 @@ Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun mengguna
    - Integrasi sumber berita melalui peramban (Intent)
    - Data dari API (https://api-papb.saddansyah.space/api/news)
 ### Upcoming!
+- Authentication + Authorization
 - Map View
+- Evidence Rate (membutuhkan auth)
 
 ## ⚙️ Technology Stack
 ![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
