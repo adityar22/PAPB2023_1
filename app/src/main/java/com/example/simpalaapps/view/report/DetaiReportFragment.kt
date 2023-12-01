@@ -24,6 +24,7 @@ import com.example.simpalaapps.presenter.detail.DetailReportContract
 import com.example.simpalaapps.presenter.detail.DetailReportPresenter
 import com.example.simpalaapps.model.ReportRepository
 import com.example.simpalaapps.view.DashboardFragment
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 // DetailReportFragment.kt
@@ -161,8 +162,16 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
             reportingDateTextView.text = "Reporting Date: ${it.reportingDate}"
             reporterEmailTextView.text = "Reporter Email: ${it.reporterEmail}"
 
-//            val bitmap: Bitmap = it.photo.toBitmap()
-//            photoImageView.setImageBitmap(bitmap)
+            if (it.photo != null) {
+                val bitmap: Bitmap? = it.photo.toBitmap()
+                if (bitmap != null) {
+                    photoImageView.setImageBitmap(bitmap)
+                } else {
+                    photoImageView.setImageResource(R.drawable.placeholder_image)
+                }
+            }else{
+                photoImageView.setImageResource(R.drawable.placeholder_image)
+            }
         }
 
         if(report.isReadOnly == true){
@@ -171,7 +180,8 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         }
     }
 
-    private fun ByteArray.toBitmap(): Bitmap {
+    private fun ByteArray?.toBitmap(): Bitmap? {
+        if (this == null) return null
         return BitmapFactory.decodeByteArray(this, 0, this.size)
     }
 

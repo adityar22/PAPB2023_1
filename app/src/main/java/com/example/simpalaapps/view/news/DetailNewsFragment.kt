@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +22,7 @@ import com.example.simpalaapps.presenter.detail.news.DetailNewsContract
 import com.example.simpalaapps.presenter.detail.news.DetailNewsPresenter
 import com.example.simpalaapps.view.DashboardFragment
 import kotlinx.coroutines.launch
+import com.squareup.picasso.Picasso
 
 class DetailNewsFragment: Fragment(), DetailNewsContract.View {
     private lateinit var presenter: DetailNewsContract.Presenter
@@ -91,8 +91,7 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
             newsContentTextView.text = "${it.newsContent}"
             newsDateTextView.text = "${it.newsDate}"
 
-//            val bitmap: Bitmap = it.photo.toBitmap()
-//            photoImageView.setImageBitmap(bitmap)
+            Picasso.get().load(it.photo).into(photoImageView)
         }
     }
 

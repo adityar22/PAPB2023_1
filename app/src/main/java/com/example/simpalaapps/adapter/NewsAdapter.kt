@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpalaapps.R
 import com.example.simpalaapps.model.news.NewsEntity
+import com.squareup.picasso.Picasso
 
 class NewsAdapter(private val news: List<NewsEntity>):
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
@@ -42,10 +44,13 @@ class NewsAdapter(private val news: List<NewsEntity>):
         private val textNewsDate: TextView = itemView.findViewById(R.id.textNewsDate)
         private val buttonViewDetail: Button = itemView.findViewById(R.id.buttonViewDetail)
 
+        private val imageView : ImageView = itemView.findViewById(R.id.newsImage)
+
         fun bind(news: NewsEntity) {
             textNewsTitle.text = news.newsTitle
             textNewsTag.text = news.newsTag
             textNewsDate.text = news.newsDate
+            Picasso.get().load(news.photo).into(imageView)
 
             // Set onClickListener for the item
             itemView.setOnClickListener {
