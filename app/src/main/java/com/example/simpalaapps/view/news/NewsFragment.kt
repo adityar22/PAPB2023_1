@@ -1,10 +1,14 @@
 package com.example.simpalaapps.view.news
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +49,17 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_news, container, false)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "news_channel_id",
+                "News Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val notificationManager =
+                requireActivity().getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
 
         newsDao = AppDatabase.getInstance(requireContext()).newsDao()
         repository = NewsRepository(newsDao)
@@ -89,17 +104,19 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     }
 
     private fun injectDummyData() {
-        RetrofitInstance.api.getNewsFromApi().enqueue(object: Callback<NewsResponse> {
+        RetrofitInstance.api.getNewsFromApi().enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                if(response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     Log.d("NEWS DATA", "${response.body()!!.news}")
                     val news = arrayListOf<NewsEntity>()
-                    for (n in response.body()!!.news){
-
+                    for (n in response.body()!!.news) {
                         news.add(convertResponseNewsToEntity(n))
                     }
                     lifecycleScope.launch {
                         generateNews(news)
+
+                        // Show notification when news is successfully loaded
+                        showNewsLoadedNotification()
                     }
                 }
             }
@@ -107,9 +124,23 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 Log.e("ERROR FETCH", t.message.toString())
             }
-
         })
     }
+
+    private fun showNewsLoadedNotification() {
+        val notificationManager =
+            requireActivity().getSystemService(NotificationManager::class.java)
+
+        val notification = NotificationCompat.Builder(requireContext(), "news_channel_id")
+            .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+            .setContentTitle("News Loaded")
+            .setContentText("News data has been successfully loaded.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        notificationManager.notify(1, notification)
+    }
+
 
     override fun showNews(news: List<NewsEntity>) {
         // Tampilkan data di RecyclerView
