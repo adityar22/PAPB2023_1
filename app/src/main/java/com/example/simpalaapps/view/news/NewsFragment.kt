@@ -91,10 +91,12 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
         val updatedObject = NewsEntity(
             currentObject.newsId,
             currentObject.newsTitle,
+            currentObject.newsExcerpt,
             currentObject.newsTag,
             currentObject.newsContent,
             currentObject.photo,
             currentObject.newsDate,
+            currentObject.url,
             currentObject.isPremium
         )
 

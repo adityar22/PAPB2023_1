@@ -41,6 +41,7 @@ class NewsAdapter(private val news: List<NewsEntity>):
     inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textNewsTitle: TextView = itemView.findViewById(R.id.textNewsTitle)
         private val textNewsTag: TextView = itemView.findViewById(R.id.textNewsTag)
+        private val textNewsExcerpt: TextView = itemView.findViewById(R.id.textNewsExcerpt)
         private val textNewsDate: TextView = itemView.findViewById(R.id.textNewsDate)
         private val buttonViewDetail: Button = itemView.findViewById(R.id.buttonViewDetail)
 
@@ -48,8 +49,9 @@ class NewsAdapter(private val news: List<NewsEntity>):
 
         fun bind(news: NewsEntity) {
             textNewsTitle.text = news.newsTitle
-            textNewsTag.text = news.newsTag
+            textNewsTag.text = "Tag: ${news.newsTag}"
             textNewsDate.text = news.newsDate
+            textNewsExcerpt.text = news.newsExcerpt
             Picasso.get().load(news.photo).into(imageView)
 
             // Set onClickListener for the item

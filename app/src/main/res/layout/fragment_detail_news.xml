@@ -14,23 +14,37 @@
         android:text="News Title"
         android:textSize="24sp"
         android:textStyle="bold" />
-    <ImageView
-        android:id="@+id/photoImageView"
+    <TextView
+        android:id="@+id/newsDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/newsTitleTextView"
+        android:layout_marginTop="8dp"
+        android:text="Date"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/photoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newsDateTextView"
         android:layout_marginTop="16dp"
         tools:src="@tools:sample/avatars"
+        android:scaleType="centerCrop"
         android:contentDescription="News Photo" />
 
     <TextView
         android:id="@+id/newsTagTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:width="12dp"
+        android:padding="4dp"
+        android:paddingStart="12dp"
         android:layout_below="@id/photoImageView"
         android:layout_marginTop="8dp"
         android:text="Tag:"
-        android:textSize="18sp"
+        android:background="@drawable/pill_tag"
+        android:textSize="12sp"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/newsContentTextView"
@@ -39,16 +53,15 @@
         android:layout_below="@id/newsTagTextView"
         android:layout_marginTop="8dp"
         android:text="Content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/newsDateTextView"
+        android:textSize="14dp"
+        android:textStyle="normal" />
+    <Button
+        android:id="@+id/buttonSeeOnBrowser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@id/newsContentTextView"
-        android:layout_marginTop="8dp"
-        android:text=""
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="See on browser"/>
+
 </RelativeLayout>
 

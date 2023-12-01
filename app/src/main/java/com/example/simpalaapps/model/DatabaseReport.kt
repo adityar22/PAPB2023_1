@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.simpalaapps.model.news.NewsDao
 import com.example.simpalaapps.model.news.NewsEntity
 
-@Database(entities = [ReportEntity::class, NewsEntity::class], version = 5)
+@Database(entities = [ReportEntity::class, NewsEntity::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reportDao(): ReportDao
     abstract fun newsDao(): NewsDao

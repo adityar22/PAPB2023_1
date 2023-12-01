@@ -10,10 +10,12 @@ data class NewsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = 0,
     val newsTitle: String,
+    val newsExcerpt: String,
     val newsTag: String,
     val newsContent: String,
     val photo: String,
     val newsDate: String,
+    val url: String,
     val isPremium: Boolean
 )
 

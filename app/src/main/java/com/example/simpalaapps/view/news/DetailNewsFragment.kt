@@ -1,6 +1,5 @@
 package com.example.simpalaapps.view.news
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -21,8 +21,8 @@ import com.example.simpalaapps.model.news.NewsRepository
 import com.example.simpalaapps.presenter.detail.news.DetailNewsContract
 import com.example.simpalaapps.presenter.detail.news.DetailNewsPresenter
 import com.example.simpalaapps.view.DashboardFragment
-import kotlinx.coroutines.launch
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 class DetailNewsFragment: Fragment(), DetailNewsContract.View {
     private lateinit var presenter: DetailNewsContract.Presenter
@@ -76,6 +76,13 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         }
     }
 
+    private fun redirectToBrowser(url: String) {
+        val httpIntent = Intent(Intent.ACTION_VIEW)
+        httpIntent.data = Uri.parse(url)
+
+        startActivity(httpIntent)
+    }
+
     override fun showNewsDetails(news: NewsEntity) {
         this.news = news
 
@@ -84,6 +91,7 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
         val newsTagTextView: TextView = requireView().findViewById(R.id.newsTagTextView)
         val newsContentTextView: TextView = requireView().findViewById(R.id.newsContentTextView)
         val newsDateTextView: TextView = requireView().findViewById(R.id.newsDateTextView)
+        val buttonSeeOnBrowser: Button = requireView().findViewById(R.id.buttonSeeOnBrowser)
 
         news?.let {
             newsTitleTextView.text = "${it.newsTitle}"
@@ -92,6 +100,11 @@ class DetailNewsFragment: Fragment(), DetailNewsContract.View {
             newsDateTextView.text = "${it.newsDate}"
 
             Picasso.get().load(it.photo).into(photoImageView)
+
+            buttonSeeOnBrowser.setOnClickListener {
+                redirectToBrowser(news.url)
+            }
+
         }
     }
 
