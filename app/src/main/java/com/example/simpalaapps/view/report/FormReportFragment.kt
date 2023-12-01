@@ -89,7 +89,7 @@ class FormReportFragment : Fragment(), FormReportContract.View {
         submitButton.setOnClickListener {
             val report = createReportFromInput()
 
-            if (report.id != null) {
+            if (report.reportType != null && report.reporterName != null && report.latitude != null && report.longitude != null && report.reportDesc != null && report.reporterEmail != null && report.photo != null) {
                 lifecycleScope.launch {
                     presenter.submitReport(report)
                 }

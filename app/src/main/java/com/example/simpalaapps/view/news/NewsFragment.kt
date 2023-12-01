@@ -11,19 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpalaapps.R
 import com.example.simpalaapps.adapter.NewsAdapter
-import com.example.simpalaapps.adapter.ReportAdapter
 import com.example.simpalaapps.model.AppDatabase
-import com.example.simpalaapps.model.Report
-import com.example.simpalaapps.model.ReportEntity
-import com.example.simpalaapps.model.ReportRepository
-import com.example.simpalaapps.model.ReportsResponse
 import com.example.simpalaapps.model.news.News
 import com.example.simpalaapps.model.news.NewsDao
 import com.example.simpalaapps.model.news.NewsEntity
 import com.example.simpalaapps.model.news.NewsRepository
 import com.example.simpalaapps.model.news.NewsResponse
-import com.example.simpalaapps.presenter.DashboardPresenter
-
 import com.example.simpalaapps.presenter.news.NewsContract
 import com.example.simpalaapps.presenter.news.NewsPresenter
 import com.example.simpalaapps.retrofit.RetrofitInstance
@@ -49,7 +42,7 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     ): View? {
 
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val view = inflater.inflate(R.layout.fragment_news, container, false)
 
         newsDao = AppDatabase.getInstance(requireContext()).newsDao()
         repository = NewsRepository(newsDao)
