@@ -88,7 +88,8 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
             currentObject.longitude,
             byteArray,
             currentObject.reportingDate,
-            currentObject.reporterEmail
+            currentObject.reporterEmail,
+            currentObject.isReadOnly
         )
 
         // Perbarui objek pada indeks tertentu di dalam list

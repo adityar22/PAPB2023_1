@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.simpalaapps.model.news.NewsDao
 import com.example.simpalaapps.model.news.NewsEntity
 
-@Database(entities = [ReportEntity::class, NewsEntity::class], version = 4)
+@Database(entities = [ReportEntity::class, NewsEntity::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reportDao(): ReportDao
     abstract fun newsDao(): NewsDao
@@ -28,6 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                         "photo TEXT, " +
                         "newsDate TEXT, " +
                         "isPremium TEXT)")
+
                 database.execSQL("CREATE TABLE IF NOT EXISTS new_report_table (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                         "reportType TEXT, " +

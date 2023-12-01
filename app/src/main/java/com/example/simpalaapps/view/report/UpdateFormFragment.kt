@@ -63,7 +63,7 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
         val reportDescription = arguments?.getString(ARG_REPORT_DESCRIPTION) ?: ""
         val reporterEmail = arguments?.getString(ARG_REPORTER_EMAIL) ?: ""
 
-        report = ReportEntity(reportId, reportType, reporterName,reportDescription, 0.0, 0.0, ByteArray(0), "", reporterEmail)
+        report = ReportEntity(reportId, reportType, reporterName,reportDescription, 0.0, 0.0, ByteArray(0), "", reporterEmail, false)
         // Create the report using the retrieved values, set default values as needed
 
         // Find views
@@ -95,7 +95,8 @@ class UpdateFormFragment : Fragment(), UpdateFormContract.View {
             report.longitude,
             report.photo,
             report.reportingDate,
-            report.reporterEmail
+            report.reporterEmail,
+            report.isReadOnly
         )
         presenter.onUpdateClicked(updatedReport)
     }

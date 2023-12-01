@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "1315479eb5c7a00266a9a38734654ad7",
+    "version": 4,
+    "identityHash": "5d08e7f70b247c958fc767ee9c6e6059",
     "entities": [
       {
         "tableName": "report_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `reportType` TEXT NOT NULL, `reporterName` TEXT NOT NULL, `reportDesc` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `photo` BLOB NOT NULL, `reportingDate` TEXT NOT NULL, `reporterEmail` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `reportType` TEXT NOT NULL, `reporterName` TEXT NOT NULL, `reportDesc` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `photo` BLOB NOT NULL, `reportingDate` TEXT NOT NULL, `reporterEmail` TEXT NOT NULL, `isReadOnly` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -60,6 +60,12 @@
             "fieldPath": "reporterEmail",
             "columnName": "reporterEmail",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isReadOnly",
+            "columnName": "isReadOnly",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -132,7 +138,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1315479eb5c7a00266a9a38734654ad7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5d08e7f70b247c958fc767ee9c6e6059')"
     ]
   }
 }

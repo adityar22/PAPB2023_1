@@ -20,13 +20,15 @@ data class NewsEntity(
 data class News(
     val newsId: Long? = 0,
     val newsTitle: String,
+    val newsExcerpt: String,
     val newsTag: String,
     val newsContent: String,
-    val photo: String,
     val newsDate: String,
+    val photo: String,
+    val url: String,
     val isPremium: Boolean
 )
 data class NewsResponse(
     val message: String,
-    val reports: List<News>
+    val news: List<News>
 )

@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,10 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
     private lateinit var presenter: DetailReportContract.Presenter
     private var reportId: Long = 0
     private lateinit var report: ReportEntity
+
+    private lateinit var btnUpdate: Button
+    private lateinit var btnDelete: Button
+    private lateinit var btnSeeOnMap: Button
 
     companion object {
         private const val ARG_REPORT_ID = "arg_report_id"
@@ -58,15 +63,16 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
         // Use let to perform the cast within a safe block
 
+
         presenter = DetailReportPresenter(this, repository)
+
+        btnUpdate = view.findViewById(R.id.btnUpdate)
+        btnDelete = view.findViewById(R.id.btnDelete)
+        btnSeeOnMap = view.findViewById(R.id.btnSeeOnMap)
+
         lifecycleScope.launch {
             presenter.onViewCreated(reportId)
         }
-
-
-        val btnUpdate: Button = view.findViewById(R.id.btnUpdate)
-        val btnDelete: Button = view.findViewById(R.id.btnDelete)
-        val btnSeeOnMap: Button = view.findViewById(R.id.btnSeeOnMap)
 
         btnUpdate.setOnClickListener {
             openUpdateFormFragment()
@@ -81,6 +87,10 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showMapDirect(latitude: Double, longitude: Double){
@@ -153,6 +163,11 @@ class DetailReportFragment : Fragment(), DetailReportContract.View {
 
 //            val bitmap: Bitmap = it.photo.toBitmap()
 //            photoImageView.setImageBitmap(bitmap)
+        }
+
+        if(report.isReadOnly == true){
+            btnUpdate.isVisible = false
+            btnDelete.isVisible = false
         }
     }
 

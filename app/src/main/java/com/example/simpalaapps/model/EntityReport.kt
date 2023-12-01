@@ -15,7 +15,8 @@ data class ReportEntity(
     val longitude: Double,
     val photo: ByteArray,
     val reportingDate: String,
-    val reporterEmail: String
+    val reporterEmail: String,
+    val isReadOnly: Boolean
 )
 
 // For Retrofit
@@ -28,7 +29,8 @@ data class Report(
     val longitude: Double,
     val photo: String,
     val reportingDate: String,
-    val reporterEmail: String
+    val reporterEmail: String,
+    val isReadOnly: Boolean
 )
 data class ReportsResponse(
     val message: String,
