@@ -13,5 +13,6 @@ interface DashboardContract {
     interface Presenter {
 //        fun injectDummyData()
         fun loadReports()
+        fun searchReport(query: String)
     }
 }

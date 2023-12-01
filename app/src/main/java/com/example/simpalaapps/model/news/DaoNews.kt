@@ -25,4 +25,5 @@ interface NewsDao {
 
     @Query("DELETE FROM news_table WHERE id = :newsId")
     fun deleteNews(newsId: Long): Int  // Return type is Int
+
 }

@@ -23,6 +23,11 @@ interface ReportDao {
     @Update
     fun updateReport(report: ReportEntity): Int  // Return type is Int
 
+    @Query("SELECT * FROM report_table WHERE reportType LIKE :reportType")
+    fun searchReport(reportType: String?): List<ReportEntity>
+
     @Query("DELETE FROM report_table WHERE id = :reportId")
     fun deleteReport(reportId: Long): Int  // Return type is Int
+
+
 }

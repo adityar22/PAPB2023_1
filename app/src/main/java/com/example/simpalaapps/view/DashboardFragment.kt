@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +34,11 @@ import retrofit2.Response
 
 class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnItemClickListener {
 
-    private lateinit var presenter: DashboardContract.Presenter
+    private lateinit var presenter: DashboardPresenter
     private lateinit var repository: ReportRepository
     private lateinit var reportDao: ReportDao
+    private lateinit var adapter: ReportAdapter
+    private lateinit var searchView: SearchView
     override val lifecycleScope_: CoroutineScope
         get() = lifecycleScope
 
@@ -65,6 +69,19 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        searchView = view.findViewById(R.id.reportSearchView)
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                lifecycleScope.launch {
+                    presenter.searchReport(newText.orEmpty())
+                }
+                return true
+            }
+        })
         // Inject Dummy Data to Presenter
         injectDummyData()
     }
@@ -119,7 +136,7 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
 
     override fun showReports(reports: List<ReportEntity>) {
         // Tampilkan data di RecyclerView
-        val adapter = ReportAdapter(reports)
+        adapter = ReportAdapter(reports)
         adapter.setOnItemClickListener(this)
         val recyclerView: RecyclerView = view?.findViewById(R.id.recyclerView)!!
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

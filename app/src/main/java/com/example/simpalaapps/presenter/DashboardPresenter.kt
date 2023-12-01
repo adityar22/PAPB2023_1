@@ -1,16 +1,12 @@
 package com.example.simpalaapps.presenter
 
 import android.content.Context
+import com.example.simpalaapps.model.Report
 import com.example.simpalaapps.model.ReportDao
-import com.example.simpalaapps.model.ReportEntity
 import com.example.simpalaapps.model.ReportRepository
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.io.InputStream
 
 class DashboardPresenter(
     private val view: DashboardContract.View,
@@ -28,6 +24,18 @@ class DashboardPresenter(
             // Use 'withContext' to switch to the IO dispatcher for database operations
             val reports = withContext(Dispatchers.IO) {
                 reportDao.getAllReports()
+            }
+
+            // Update UI on the main thread
+            view.showReports(reports)
+        }
+    }
+
+    override fun searchReport(query: String) {
+        scope.launch {
+            // Use 'withContext' to switch to the IO dispatcher for database operations
+            val reports = withContext(Dispatchers.IO) {
+                reportDao.searchReport("%$query%")
             }
 
             // Update UI on the main thread
