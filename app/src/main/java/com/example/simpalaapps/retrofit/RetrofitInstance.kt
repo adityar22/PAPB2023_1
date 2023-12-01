@@ -5,18 +5,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    val api:ReportApi by lazy {
+    val api:ApiInterface by lazy {
         Retrofit.Builder()
             .baseUrl("https://api-papb.saddansyah.space/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ReportApi::class.java)
+            .create(ApiInterface::class.java)
     }
-    val newsApi:NewsApi by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://api-papb.saddansyah.space/api/news/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(NewsApi::class.java)
-    }
+
+
 }

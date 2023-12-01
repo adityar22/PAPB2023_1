@@ -71,7 +71,6 @@ class DashboardFragment : Fragment(), DashboardContract.View, ReportAdapter.OnIt
 
     private suspend fun generateReport(reports: List<ReportEntity>) {
         withContext(Dispatchers.IO) {
-//            reportDao.insertReport(reports)
             reportDao.insertAll(reports)
         }
     }

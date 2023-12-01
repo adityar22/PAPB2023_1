@@ -38,37 +38,4 @@ class NewsPresenter(
             view.showNews(news)
         }
     }
-
-    private fun getDummyData(context: Context): List<NewsEntity> {
-        val jsonString: String? = readJsonFromAssets(context,"dummy_data.json")
-
-        return if (!jsonString.isNullOrBlank()) {
-            parseJsonToNewsEntities(jsonString)
-        } else {
-            // Handle the case when jsonString is null or empty
-            emptyList()
-        }
-    }
-
-    private fun readJsonFromAssets(context: Context, fileName: String): String? {
-        try {
-            val inputStream: InputStream = context.assets.open(fileName)
-            val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-            return String(buffer, Charsets.UTF_8)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun parseJsonToNewsEntities(jsonString: String): List<NewsEntity> {
-        // Implement logic to parse JSON string to List<ReportEntity>
-        // (use Gson or other JSON parsing libraries)
-        val gson = Gson()
-        val newsListType = object : TypeToken<List<NewsEntity>>() {}.type
-        return gson.fromJson(jsonString, newsListType)
-    }
 }

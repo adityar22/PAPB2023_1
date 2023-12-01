@@ -34,37 +34,4 @@ class DashboardPresenter(
             view.showReports(reports)
         }
     }
-
-    private fun getDummyData(context: Context): List<ReportEntity> {
-        val jsonString: String? = readJsonFromAssets(context,"dummy_data.json")
-
-        return if (!jsonString.isNullOrBlank()) {
-            parseJsonToReportEntities(jsonString)
-        } else {
-            // Handle the case when jsonString is null or empty
-            emptyList()
-        }
-    }
-
-    private fun readJsonFromAssets(context: Context, fileName: String): String? {
-        try {
-            val inputStream: InputStream = context.assets.open(fileName)
-            val size: Int = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-            return String(buffer, Charsets.UTF_8)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun parseJsonToReportEntities(jsonString: String): List<ReportEntity> {
-        // Implement logic to parse JSON string to List<ReportEntity>
-        // (use Gson or other JSON parsing libraries)
-        val gson = Gson()
-        val reportListType = object : TypeToken<List<ReportEntity>>() {}.type
-        return gson.fromJson(jsonString, reportListType)
-    }
 }

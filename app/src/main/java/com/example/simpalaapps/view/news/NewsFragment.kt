@@ -33,6 +33,9 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     private lateinit var presenter: NewsContract.Presenter
     private lateinit var repository: NewsRepository
     private lateinit var newsDao: NewsDao
+    private lateinit var adapter: NewsAdapter
+    private lateinit var recyclerView: RecyclerView
+
     override val lifecycleScope_: CoroutineScope
         get() = lifecycleScope
 
@@ -48,10 +51,6 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
         repository = NewsRepository(newsDao)
         // Inisialisasi presenter
         presenter = NewsPresenter(this, AppDatabase.getInstance(requireContext()).newsDao(), repository, requireContext())
-        // Load data
-//        if (savedInstanceState == null) {
-//            presenter.injectDummyData()
-//        }
 
         lifecycleScope.launch {
             presenter.loadNews()
@@ -91,11 +90,13 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
     }
 
     private fun injectDummyData() {
-        RetrofitInstance.newsApi.getNewsFromApi().enqueue(object: Callback<NewsResponse> {
+        RetrofitInstance.api.getNewsFromApi().enqueue(object: Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 if(response.body() != null){
+                    Log.d("NEWS DATA", "${response.body()!!.news}")
                     val news = arrayListOf<NewsEntity>()
                     for (n in response.body()!!.news){
+
                         news.add(convertResponseNewsToEntity(n))
                     }
                     lifecycleScope.launch {
@@ -113,9 +114,9 @@ class NewsFragment: Fragment(), NewsContract.View, NewsAdapter.OnItemClickListen
 
     override fun showNews(news: List<NewsEntity>) {
         // Tampilkan data di RecyclerView
-        val adapter = NewsAdapter(news)
+        adapter = NewsAdapter(news)
         adapter.setOnItemClickListener(this)
-        val recyclerView: RecyclerView = view?.findViewById(R.id.recyclerView)!!
+        recyclerView = view?.findViewById(R.id.recyclerView)!!
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
     }
