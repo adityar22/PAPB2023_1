@@ -6,7 +6,7 @@
 Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun menggunakan Kotlin. Aplikasi ini merupakan hasil dari _project-based_ pada mata kuliah Pengembangan Aplikasi Permainan Bergerak.
 
 ## 📁 Repositories
-- Main: https://github.com/Capstone-A10-DTETI-2023
+- Main: https://github.com/adityar22/PAPB2023_1
 - API: https://github.com/saddansyah/papb-be (using Node.js)
 
 ## 🔍 Features
