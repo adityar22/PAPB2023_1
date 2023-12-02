@@ -25,6 +25,15 @@ Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun mengguna
 - Map View
 - Evidence Rate (membutuhkan auth)
 
+## 📱 Preview
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/8a46106e-3db1-41bf-a5b9-4524e5dc1fc9)
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/9c532b74-8d19-4068-bac0-ae89f4dff3b4)
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/0b185ed1-7b04-43a5-93bb-18de7a2196ed)
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/271c8f2e-51c4-48fb-8dc2-c27b2868e862)
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/83a9de59-c870-45c9-91c8-ecdae4c908a9)
+![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/03ac502c-f8c5-4f82-8649-7092919e874a)
+
+
 ## ⚙️ Technology Stack
 ![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
