@@ -16,9 +16,10 @@ Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun mengguna
     - Integrasi aplikasi Google Maps untuk melihat lokasi pelaporan (Intent)
 - Cari laporan berdasarkan judul
 - Tambah laporan
-- Tampilan List Berita (Retrofit API)
+- Tampilan list dan detail Berita (Retrofit API)
    - Integrasi sumber berita melalui peramban (Intent)
    - Data dari API (https://api-papb.saddansyah.space/api/news)
+   - Notifikasi ketika terdapat berita baru
 ### Upcoming!
 - Authentication + Authorization
 - Map View
