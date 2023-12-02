@@ -33,7 +33,6 @@ Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun mengguna
 ![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/83a9de59-c870-45c9-91c8-ecdae4c908a9)
 ![image](https://github.com/adityar22/PAPB2023_1/assets/73093118/03ac502c-f8c5-4f82-8649-7092919e874a)
 
-
 ## ⚙️ Technology Stack
 ![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
@@ -49,6 +48,17 @@ Simpala App adalah sebuah aplikasi untuk pelaporan sampah yang dibangun mengguna
 - `feat: add post controller` <br/>
 - `chore: update readme` <br/>
 - `fix(auth): fix signin input now showing`
+
+## 🔗 Dependencies + Version
+- Kotlin (v1.9.0)
+- Gradle (v8.0)
+- Android Gradle Plugin (v8.1.1)
+- Android SDK Version (v34)
+- Navigation Fragment (v2.7.5)
+- Room Database (v2.5.1)
+- GSON (manage JSON files) (v2.8.8)
+- Retrofit (API interface) (v2.9.0)
+- Picasso (URI image handler) (v2.71828)
 
 ---
 <p align="center">
